@@ -39,29 +39,6 @@
   color: var(--ifm-color-emphasis-700);
 }
 
-.status {
-  width: fit-content;
-  border-radius: 999px;
-  padding: 0.24rem 0.58rem;
-  font-size: 0.78rem;
-  font-weight: 750;
-}
-
-.reviewed {
-  color: #246b11;
-  background: #e8f6df;
-}
-
-.draft {
-  color: #8a5200;
-  background: #fff2d6;
-}
-
-.planned {
-  color: var(--ifm-color-emphasis-700);
-  background: var(--ifm-color-emphasis-100);
-}
-
 .detail {
   grid-column: 1 / -1;
   padding: 0.75rem 1.25rem;

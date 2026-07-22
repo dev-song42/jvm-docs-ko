@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'JVM Docs KO',
-  tagline: '핵심 공식 문서를 선별해 공부하며 다듬는 비공식 한국어 문서',
+  tagline: 'Java와 백엔드 기술을 공식 자료 중심으로 공부하며 다듬는 한국어 문서',
   favicon: 'img/logo.svg',
 
   future: {
@@ -55,7 +55,7 @@ const config: Config = {
     metadata: [
       {
         name: 'keywords',
-        content: 'Spring Framework, Spring Boot, Java, 한국어 문서, 비공식 번역',
+        content: 'Java, Spring Framework, Spring Boot, 한국어 문서, 비공식 번역, 학습 정리',
       },
     ],
     colorMode: {
@@ -70,6 +70,12 @@ const config: Config = {
       },
       items: [
         {
+          to: '/java/',
+          label: 'Java',
+          position: 'left',
+          activeBaseRegex: '/java/',
+        },
+        {
           to: '/spring-framework/',
           label: 'Spring Framework',
           position: 'left',
@@ -81,12 +87,7 @@ const config: Config = {
           position: 'left',
           activeBaseRegex: '/spring-boot/',
         },
-        {
-          to: '/java/',
-          label: 'Java',
-          position: 'left',
-          activeBaseRegex: '/java/',
-        },
+        {to: '/roadmap/', label: '로드맵', position: 'left'},
         {
           href: 'https://github.com/dev-song42/jvm-docs-ko',
           label: 'GitHub',
@@ -101,9 +102,10 @@ const config: Config = {
         {
           title: '문서',
           items: [
+            {label: 'Java 21', to: '/java/'},
             {label: 'Spring Framework', to: '/spring-framework/'},
-            {label: 'Spring Boot 3.5.6', to: '/spring-boot/'},
-            {label: 'Java (준비 중)', to: '/java/'},
+            {label: 'Spring Boot 3.5.16', to: '/spring-boot/'},
+            {label: '전체 로드맵', to: '/roadmap/'},
           ],
         },
         {
