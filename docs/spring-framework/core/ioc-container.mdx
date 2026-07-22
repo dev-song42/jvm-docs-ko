@@ -1,0 +1,60 @@
+---
+title: Spring IoC 컨테이너와 빈
+sidebar_label: IoC 컨테이너
+description: Spring IoC 컨테이너와 빈의 역할을 설명하는 예시 문서
+---
+
+import SourceInfo from '@site/src/components/SourceInfo';
+import TranslatorNote from '@site/src/components/TranslatorNote';
+
+<div className="unofficial-notice">
+  <strong>비공식 한글 번역</strong>
+  <span>이 페이지는 사이트 구조와 번역 형식을 보여주는 예시 초안입니다.</span>
+</div>
+
+<SourceInfo
+  sourceUrl="https://github.com/spring-projects/spring-framework/blob/6.2.x/framework-docs/modules/ROOT/pages/core/beans/introduction.adoc"
+  sourceLabel="공식 문서 소스"
+  version="6.2.x"
+  status="초안"
+  reviewedAt="2026-07-22"
+>
+  원문 경로: <code>framework-docs/modules/ROOT/pages/core/beans/introduction.adoc</code>
+</SourceInfo>
+
+## IoC 컨테이너란?
+
+Spring IoC 컨테이너는 애플리케이션을 구성하는 객체를 생성하고, 객체 사이의 의존 관계를 연결하며, 전체 생명주기를 관리합니다. Spring에서는 컨테이너가 관리하는 객체를 <strong>빈(bean)</strong>이라고 부릅니다.
+
+애플리케이션 코드는 필요한 구현을 직접 찾아 생성하는 대신, 자신에게 필요한 협력 객체가 무엇인지 선언합니다. 실제 객체를 준비하고 연결하는 책임은 컨테이너가 맡습니다.
+
+## 빈은 어떻게 등록되나
+
+설정 클래스에서는 다음과 같이 애플리케이션 구성 요소를 빈으로 선언할 수 있습니다.
+
+```java title="ApplicationConfig.java"
+@Configuration
+class ApplicationConfig {
+
+    @Bean
+    OrderService orderService(OrderRepository orderRepository) {
+        return new OrderService(orderRepository);
+    }
+}
+```
+
+`OrderService`는 저장소 구현을 직접 생성하지 않습니다. 생성자에 필요한 `OrderRepository`를 표현하고, 컨테이너가 적절한 빈을 전달합니다.
+
+<TranslatorNote>
+
+이 예시는 원문의 문장을 그대로 옮긴 번역이 아니라, 최종 문서에서 사용할 코드 블록과 보충 설명의 모양을 확인하기 위한 샘플입니다. 실제 번역을 시작할 때 기준 커밋 SHA와 정확한 원문 범위를 함께 기록합니다.
+
+</TranslatorNote>
+
+## BeanFactory와 ApplicationContext
+
+`BeanFactory`는 Spring 컨테이너의 기본 기능을 정의합니다. 일반적인 애플리케이션에서는 국제화, 이벤트 발행, 리소스 처리 같은 기능을 함께 제공하는 `ApplicationContext`를 주로 사용합니다.
+
+## 다음에 읽을 내용
+
+컨테이너의 역할을 이해했다면 다음으로 **의존성 주입**이 객체 사이의 관계를 어떻게 표현하는지 살펴봅니다.

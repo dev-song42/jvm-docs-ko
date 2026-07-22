@@ -1,0 +1,21 @@
+.note {
+  margin: 1.5rem 0;
+  padding: 1.15rem 1.3rem;
+  border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 45%, transparent);
+  border-left: 4px solid var(--ifm-color-primary);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--ifm-color-primary) 7%, var(--ifm-background-surface-color));
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.45rem;
+  color: var(--ifm-color-primary-darkest);
+  font-weight: 800;
+}
+
+.content > :last-child {
+  margin-bottom: 0;
+}
