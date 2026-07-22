@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7faf5"/>
+  <rect x="88" y="86" width="116" height="116" rx="30" fill="#5b9f32"/>
+  <path d="m132 120-25 24 25 24m28-48 25 24-25 24" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="146" cy="144" r="7" fill="#fff"/>
+  <text x="88" y="308" fill="#172012" font-family="Arial, sans-serif" font-size="88" font-weight="700">JVM Docs KO</text>
+  <text x="90" y="390" fill="#506049" font-family="Arial, sans-serif" font-size="36">Curated Korean documentation for Spring and Java</text>
+  <rect x="88" y="462" width="1024" height="2" fill="#dfe8da"/>
+  <text x="90" y="526" fill="#5b9f32" font-family="Arial, sans-serif" font-size="28" font-weight="700">UNOFFICIAL TRANSLATION PROJECT</text>
+</svg>

@@ -1,0 +1,47 @@
+---
+slug: /spring-boot/
+title: Spring Boot 3.5.6 핵심 문서
+description: Spring Boot 3.5.6에서 우선 읽을 공식 문서 모음
+---
+
+import Link from '@docusaurus/Link';
+import SourceInfo from '@site/src/components/SourceInfo';
+
+<div className="unofficial-notice">
+  <strong>비공식 한글 번역</strong>
+  <span>Spring Framework의 핵심 개념을 바탕으로, Spring Boot에서 자주 사용하는 기능을 선별합니다.</span>
+</div>
+
+<SourceInfo
+  sourceUrl="https://docs.spring.io/spring-boot/3.5/reference/"
+  sourceLabel="Spring Boot Reference"
+  version="3.5.6"
+  status="선별 중"
+  reviewedAt="2026-07-22"
+>
+  3.5 마이너 라인의 공식 문서를 기준으로 하고, 페이지마다 실제 확인한 패치 버전을 기록합니다.
+</SourceInfo>
+
+## 우선 번역할 주제
+
+<div className="project-grid">
+  <Link className="project-card" to="/spring-boot/core/auto-configuration/">
+    <span className="project-card__eyebrow">Core</span>
+    <h3>자동 구성</h3>
+    <p>클래스패스와 설정을 바탕으로 Boot가 애플리케이션 구성을 결정하는 방식을 살펴봅니다.</p>
+  </Link>
+  <Link className="project-card" to="/spring-boot/core/external-configuration/">
+    <span className="project-card__eyebrow">Configuration</span>
+    <h3>외부 설정</h3>
+    <p>프로퍼티 파일, 환경 변수, 명령행 인자와 설정 우선순위를 정리합니다.</p>
+  </Link>
+  <Link className="project-card" to="/spring-boot/actuator/">
+    <span className="project-card__eyebrow">Production-ready</span>
+    <h3>Actuator</h3>
+    <p>운영 환경에서 애플리케이션 상태를 관찰하고 관리하는 기본 기능을 다룹니다.</p>
+  </Link>
+</div>
+
+## 선별 기준
+
+자동 생성되는 전체 속성 목록이나 특정 제품 연동처럼 필요할 때 찾아보면 되는 장은 우선순위를 낮추고, 대부분의 Boot 프로젝트에서 반복해서 사용하는 개념을 먼저 번역합니다.
