@@ -13,38 +13,30 @@ import SourceInfo from '@site/src/components/SourceInfo';
 </div>
 
 <SourceInfo
-  sourceUrl="https://docs.spring.io/spring-framework/reference/"
+  sourceUrl="https://docs.spring.io/spring-framework/reference/6.2/"
   sourceLabel="Spring Framework Reference"
-  version="6.2.x"
-  status="선별 중"
-  reviewedAt="2026-07-22"
+  documentType="공식 문서 번역"
+  version="6.2.19"
+  status="작성 전"
+  reviewedAt="2026-07-23"
 >
-  버전별 의미 차이가 있는 경우 6.2.x 원문과 소스 경로를 기준으로 확인합니다.
+  Spring Boot 3.5.16이 요구하는 Spring Framework 6.2 계열을 기준으로 확인합니다.
 </SourceInfo>
 
 ## 왜 Framework부터 읽나
 
 Spring Boot는 Spring Framework 위에 편리한 기본값과 자동 구성을 더합니다. 따라서 IoC 컨테이너, 빈, 의존성 주입 같은 기반 개념을 먼저 이해하면 Boot의 자동 동작도 훨씬 명확하게 보입니다.
 
-## 우선 번역할 주제
+## 학습 카테고리
 
-<div className="project-grid">
-  <Link className="project-card" to="/spring-framework/core/ioc-container/">
-    <span className="project-card__eyebrow">Core Container</span>
-    <h3>IoC 컨테이너와 빈</h3>
-    <p>Spring이 애플리케이션 객체를 생성하고 연결하며 관리하는 기본 모델을 살펴봅니다.</p>
-  </Link>
-  <Link className="project-card" to="/spring-framework/core/dependency-injection/">
-    <span className="project-card__eyebrow">Core Container</span>
-    <h3>의존성 주입</h3>
-    <p>생성자와 설정 메타데이터를 사용해 객체의 협력 관계를 표현하는 방법을 다룹니다.</p>
-  </Link>
-  <Link className="project-card" to="/spring-framework/aop/">
-    <span className="project-card__eyebrow">AOP</span>
-    <h3>관점 지향 프로그래밍</h3>
-    <p>트랜잭션과 로깅처럼 여러 객체에 걸친 관심사를 분리하는 Spring AOP의 기본 개념입니다.</p>
-  </Link>
-</div>
+1. IoC와 DI 컨테이너
+2. 타입 변환, 데이터 바인딩, 검증
+3. AOP와 프록시
+4. 트랜잭션
+5. Spring MVC
+6. Spring 테스트
+
+<Link className="button button--primary" to="/roadmap/#2부-spring-framework-6219">Spring Framework 전체 로드맵 보기</Link>
 
 ## 범위 원칙
 

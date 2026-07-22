@@ -154,6 +154,19 @@ pre code {
   color: var(--ifm-color-primary-darkest);
 }
 
+.roadmap-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.theme-doc-markdown table td:last-child,
+.theme-doc-markdown table th:last-child {
+  white-space: nowrap;
+}
+
 .project-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
