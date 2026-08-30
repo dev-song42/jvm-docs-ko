@@ -1,0 +1,4 @@
+interface:
+  display_name: "Submit Document"
+  short_description: "완성한 문서를 검증하고 커밋·push·PR로 제출합니다"
+  default_prompt: "Use $submit-doc to validate and submit the completed document as a pull request."

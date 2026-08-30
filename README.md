@@ -39,11 +39,34 @@ docs/
 templates/
 ├── study-note.mdx
 └── translation.mdx
+
+.agents/skills/
+├── start-doc/
+├── submit-doc/
+└── release-doc/
 ```
 
 각 문서에는 주요 출처, 문서 유형, 기준 버전, 작성 상태와 검토일을 표시합니다. 번역자의 보충 설명은 `번역자 노트`로 원문과 구분합니다.
 
 전체 학습 순서와 상태는 `docs/roadmap.mdx`에서 관리합니다. 새 문서는 `templates/`의 해당 템플릿을 복사해 시작합니다.
+
+## 문서 작업 워크플로
+
+이 저장소에는 Codex에서 문서 작업을 반복할 때 사용하는 레포 전용 스킬이 있습니다.
+
+| 단계 | 스킬 | 결과 |
+|---|---|---|
+| 시작 | `start-doc` | 최신 `main`에서 문서 브랜치와 `draft: true` 초안 생성 |
+| 제출 | `submit-doc` | 문서 검증, `작성 완료` 반영, commit·push, Ready PR 생성 |
+| 공개 | `release-doc` | PR 병합, GitHub Pages 배포와 공개 URL 확인 |
+
+예를 들어 첫 Java 주제를 시작할 때는 `Java 1.1 문서 시작해줘` 또는 `$start-doc`을 사용할 수 있습니다. 글을 다 쓴 뒤에는 `$submit-doc`, PR을 공개할 때는 `$release-doc`을 사용합니다.
+
+```text
+start-doc → 공부하며 작성 → submit-doc → release-doc
+```
+
+각 단계는 자신의 범위까지만 수행합니다. 특히 `start-doc`은 push하지 않고, `submit-doc`은 병합하지 않으며, `release-doc`은 문서 내용을 수정하지 않습니다. 자세한 에이전트 규칙은 [`AGENTS.md`](./AGENTS.md)에 있습니다.
 
 ## 배포
 

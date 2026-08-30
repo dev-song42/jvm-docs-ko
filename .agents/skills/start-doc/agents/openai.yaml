@@ -1,0 +1,4 @@
+interface:
+  display_name: "Start Document"
+  short_description: "로드맵 주제로 문서 초안과 작업 브랜치를 시작합니다"
+  default_prompt: "Use $start-doc to start a roadmap document on a dedicated branch."
