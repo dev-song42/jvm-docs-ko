@@ -1,0 +1,4 @@
+interface:
+  display_name: "문서 배포"
+  short_description: "검토한 문서를 커밋·PR로 제출하고 최종 승인 후 배포합니다"
+  default_prompt: "Use $publish-doc to validate and publish the user-reviewed Java 1.1 article, requesting final approval before merging the PR."

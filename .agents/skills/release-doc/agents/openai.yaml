@@ -1,4 +1,0 @@
-interface:
-  display_name: "Release Document"
-  short_description: "검증된 문서 PR을 병합하고 Pages 배포를 확인합니다"
-  default_prompt: "Use $release-doc to merge a validated document pull request and verify its deployment."

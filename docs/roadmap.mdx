@@ -1,17 +1,17 @@
 ---
 slug: /roadmap/
 title: 학습 로드맵
-description: Java 21, Spring Framework 6.2.19, Spring Boot 3.5.16을 순서대로 공부하며 채워 가는 전체 문서 목록
+description: Java 21, Spring Framework 6.2.19, Spring Boot 3.5.16의 핵심 주제·범위·공식 참고 자료와 작성 상태
 ---
 
 import DocumentStatus from '@site/src/components/DocumentStatus';
 
 <div className="unofficial-notice">
   <strong>공개 학습 로드맵</strong>
-  <span>Java에서 시작해 Spring Framework의 원리를 이해하고, 마지막으로 Spring Boot의 자동화를 학습합니다.</span>
+  <span>Java의 기반 개념과 스레드를 익힌 뒤 Spring Framework의 원리, Spring Boot의 자동 구성으로 이어갑니다.</span>
 </div>
 
-## 상태
+## 상태와 읽는 방법
 
 <div className="roadmap-legend">
   <DocumentStatus status="작성 전" />
@@ -19,357 +19,597 @@ import DocumentStatus from '@site/src/components/DocumentStatus';
   <DocumentStatus status="작성 완료" />
 </div>
 
-- **작성 전**: 학습 순서만 확정된 상태이며 실제 문서는 아직 없습니다.
-- **작성 중**: 초안을 작성하고 있으며 `draft: true`인 문서는 공개 사이트에서 제외합니다.
-- **작성 완료**: 검토를 마치고 공개한 문서입니다.
+- **작성 전**: 공개할 문서는 아직 없으며 주제·범위만 계획된 상태입니다. 작업 브랜치에 비공개 초안이 있을 수 있습니다.
+- **작성 중**: 초안을 작성하고 있으며 `draft: true`인 문서는 공개 사이트에서 제외합니다. 진행 상태 공개는 별도로 요청한 경우에만 반영합니다.
+- **작성 완료**: 검토를 마치고 공개 문서로 연결한 상태입니다.
+- **필수 / 심화**는 작성 상태가 아니라 학습 깊이입니다. 각 부의 필수 항목을 먼저 읽고 심화는 필요할 때 돌아와도 됩니다.
+- 각 행에는 **문서 제목, 포함·제외 범위, 주요 공식 자료**를 함께 적습니다. 자료 링크는 공개된 한국어 글 링크가 아닙니다.
+- 앞선 필수 내용을 전제로 순서대로 읽되, 각 카테고리의 선수 지식을 확인합니다. 자료 조사·초안 작성 후 작성자가 읽고 예제를 확인하며 다듬습니다.
 
-현재 목록은 첫 학습을 시작하기 전의 기준선입니다. 실제 문서는 아래 순서대로 하나씩 작성합니다.
+### 출처와 버전 기준
+
+Java는 참고 자료를 종합한 독립적인 해설이고, Spring·Spring Boot는 공식 문서 선별 번역입니다. 이 구분은 템플릿과 문서 유형에도 유지합니다.
+
+아래 출처는 **예정 범위의 대표 자료**입니다. 글을 작성할 때 읽은 페이지·절, 추가 자료, 기준 버전과 검토일을 기록합니다. Spring 문서의 `6.2`·`3.5` 웹 링크는 갱신될 수 있으므로, 실제 번역문은 [Framework v6.2.19 문서 소스](https://github.com/spring-projects/spring-framework/tree/v6.2.19/framework-docs/modules/ROOT/pages)와 [Boot v3.5.16 문서 소스](https://github.com/spring-projects/spring-boot/tree/v3.5.16/spring-boot-project/spring-boot-docs/src/docs/antora/modules)의 경로·절·태그 또는 커밋으로 고정합니다. 원문 구간과 다른 해설을 혼합해 공식 번역인 것처럼 표시하지 않습니다.
 
 ## 1부: Java 21
 
-Java 문서는 공식 자료를 참고해 직접 공부하고 설명하는 **개인 학습 정리**로 작성합니다.
+Java는 공식 자료로 사실을 확인하고 설명 순서·문장·예제를 직접 구성하는 **자료 기반 해설(개인 학습 정리)**로 작성합니다. 여러 문서의 문단을 번역해 이어 붙이지 않습니다. 아래 링크는 참고 자료이며 일괄적인 번역·재배포 허가를 뜻하지 않습니다. dev.java 등 계속 갱신되는 자료도 예제와 동작은 Java 21에 맞춰 확인합니다.
 
 ### 1. Java 플랫폼과 실행 구조
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 1.1 | Java, JVM, JDK의 관계 | <DocumentStatus status="작성 전" /> |
-| 1.2 | 소스 컴파일, 바이트코드, JVM 실행 | <DocumentStatus status="작성 전" /> |
-| 1.3 | 패키지, 클래스패스, 모듈 패스, JAR | <DocumentStatus status="작성 전" /> |
+선수 지식: 없음.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 1.1 | **Java, JVM, JDK의 관계**<br />언어·실행 환경·개발 도구의 역할을 구분한다. 실행 단계는 1.2에서 다룬다. [자료1][jvm-intro] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.2 | **소스 컴파일, 바이트코드, JVM 실행**<br />javac와 java로 최소 프로그램을 실행하고 컴파일과 실행 오류를 구분한다. [자료1][jdk-tools] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.3 | **패키지, 클래스패스와 JAR**<br />패키지 이름, 클래스 탐색, JAR의 역할을 다룬다. 모듈 패스는 클래스패스와의 차이만 소개한다. [자료1][java-packages] · [자료2][jdk-tools] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.4 | **빌드 도구 입문: Maven·Gradle과 프로젝트 구조**<br />빌드 도구의 역할과 최소 실행 명령을 익힌다. 의존성·빌드 단계의 상세는 8.1로 넘긴다. [자료1][maven] · [자료2][gradle] | 필수 | <DocumentStatus status="작성 전" /> |
 
 ### 2. 타입과 언어 기본
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 2.1 | 기본 타입, 참조 타입, Wrapper, Autoboxing | <DocumentStatus status="작성 전" /> |
-| 2.2 | 변수의 범위, 생명주기, 형 변환 | <DocumentStatus status="작성 전" /> |
-| 2.3 | 배열, String, String Pool, Enum, `var` | <DocumentStatus status="작성 전" /> |
-| 2.4 | 제어문, Switch Expression, Pattern Matching, `null` | <DocumentStatus status="작성 전" /> |
+선수 지식: Java 1장.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 2.1 | **기본 타입, 참조 타입, Wrapper와 null**<br />값과 참조, 기본값, boxing·unboxing 및 null 관련 오류를 다룬다. [자료1][java-basics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.2 | **변수의 범위, 초기화, 형 변환과 var**<br />지역·인스턴스·클래스 변수, 변수의 생명주기, 변환과 지역 변수 타입 추론을 구분한다. [자료1][java-basics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.3 | **연산자, 제어문과 switch 표현식**<br />조건·반복·단락 평가와 switch의 값 반환을 다룬다. 패턴 매칭은 3.12에서 설명한다. [자료1][java-basics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.4 | **배열과 참조**<br />생성·순회·다차원 배열과 배열 복사의 차이를 다룬다. 컬렉션은 6장에서 설명한다. [자료1][java-basics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.5 | **String, 문자열 비교와 String Pool**<br />문자열의 불변성, 동일성·내용 비교, 문자열 연결과 StringBuilder를 다룬다. [자료1][java-strings] | 필수 | <DocumentStatus status="작성 전" /> |
 
 ### 3. 클래스와 객체지향
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 3.1 | 클래스, 객체, 필드, 메서드, 생성자 | <DocumentStatus status="작성 전" /> |
-| 3.2 | 접근 제어자, `static`, `final` | <DocumentStatus status="작성 전" /> |
-| 3.3 | 캡슐화와 불변 객체 | <DocumentStatus status="작성 전" /> |
-| 3.4 | 상속과 합성 | <DocumentStatus status="작성 전" /> |
-| 3.5 | 추상 클래스와 인터페이스 | <DocumentStatus status="작성 전" /> |
-| 3.6 | 오버로딩, 오버라이딩, 다형성, 동적 디스패치 | <DocumentStatus status="작성 전" /> |
-| 3.7 | 중첩 클래스와 내부 클래스 | <DocumentStatus status="작성 전" /> |
-| 3.8 | `Object`, 동일성, `equals`, `hashCode`, `toString` | <DocumentStatus status="작성 전" /> |
-| 3.9 | Record와 Sealed Class | <DocumentStatus status="작성 전" /> |
+선수 지식: Java 2장.
 
-### 4. 제네릭
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 3.1 | **클래스, 객체, 필드, 메서드와 생성자**<br />객체 생성·초기화, this와 생성자 호출을 최소 예제로 설명한다. [자료1][java-classes] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.2 | **값 전달과 객체 참조**<br />인자 복사, 객체 상태 변경, 참조 재할당의 차이를 직접 구성한 예제로 확인한다. [자료1][java-arguments] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.3 | **접근 제어자, static과 final**<br />접근 범위, 클래스 멤버, 변경 제한을 구분한다. final 참조와 불변 객체를 혼동하지 않는다. [자료1][java-classes] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.4 | **캡슐화와 불변 객체**<br />상태 변경 통제와 방어적 복사를 다룬다. 객체지향 설계 원칙 전체로 범위를 넓히지 않는다. [자료1][java-classes] · [자료2][java-records] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.5 | **상속과 합성**<br />상속 관계와 다른 객체에 역할을 맡기는 구성을 비교한다. 디자인 패턴 사전은 제외한다. [자료1][java-inheritance] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.6 | **추상 클래스와 인터페이스**<br />구현 공유와 계약, 기본 메서드를 다룬다. Spring의 의존성 분리에 연결한다. [자료1][java-interfaces] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.7 | **오버로딩, 오버라이딩과 다형성**<br />컴파일 시 메서드 선택과 실행 시 동적 디스패치를 구분한다. [자료1][java-inheritance] · [자료2][java-classes] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.8 | **중첩 클래스와 내부 클래스**<br />정적 중첩·내부·지역·익명 클래스의 사용 범위와 바깥 객체 참조를 다룬다. [자료1][java-classes] | 심화 | <DocumentStatus status="작성 전" /> |
+| 3.9 | **Object, 동일성과 equals·hashCode**<br />객체 비교의 계약, toString과 컬렉션 키로 사용할 때의 주의점을 다룬다. [자료1][java-object] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.10 | **Enum과 열거형 모델링**<br />열거형 상수·필드·메서드를 다룬다. 정해진 선택지를 타입으로 표현한다. [자료1][java-classes] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.11 | **Record와 데이터 표현**<br />자동 생성되는 멤버, 생성자, 얕은 불변성과 사용 한계를 다룬다. [자료1][java-records] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.12 | **Sealed Class와 패턴 매칭**<br />상속 제한, instanceof·switch 패턴과 Record Pattern을 Java 21의 정식 기능 범위로 설명한다. [자료1][java-patterns] | 필수 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 4.1 | 제네릭 클래스, 인터페이스, 메서드, 타입 경계 | <DocumentStatus status="작성 전" /> |
-| 4.2 | 불공변성, 와일드카드, `extends`, `super` | <DocumentStatus status="작성 전" /> |
-| 4.3 | PECS와 타입 추론 | <DocumentStatus status="작성 전" /> |
-| 4.4 | 타입 소거, Raw Type, Reifiable Type, 배열의 차이 | <DocumentStatus status="작성 전" /> |
+### 4. 예외와 자원 관리
 
-### 5. 예외와 자원 관리
+선수 지식: Java 3장.
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 5.1 | `Throwable`, Error, Checked·Unchecked Exception | <DocumentStatus status="작성 전" /> |
-| 5.2 | 예외 전파, `try-catch-finally`, try-with-resources | <DocumentStatus status="작성 전" /> |
-| 5.3 | 사용자 정의 예외, 예외 변환, 예외 설계 | <DocumentStatus status="작성 전" /> |
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 4.1 | **Throwable, Error와 예외의 종류**<br />Checked·Unchecked Exception의 구분과 컴파일러의 검사 범위를 설명한다. [자료1][java-exceptions] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.2 | **예외 전파와 try-with-resources**<br />try-catch-finally, throws, AutoCloseable과 자원 정리를 다룬다. [자료1][java-exceptions] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.3 | **사용자 정의 예외와 예외 변환**<br />원인 보존, 호출자에게 전달할 의미와 복구 가능성을 중심으로 독립적인 설계 해설을 작성한다. [자료1][java-exceptions] | 필수 | <DocumentStatus status="작성 전" /> |
 
-### 6. 애노테이션
+### 5. 제네릭
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 6.1 | 기본 제공 애노테이션과 사용자 정의 애노테이션 | <DocumentStatus status="작성 전" /> |
-| 6.2 | `Target`, `Retention`, `Inherited`, `Repeatable` | <DocumentStatus status="작성 전" /> |
-| 6.3 | Meta-annotation, 런타임 조회, Annotation Processing 개요 | <DocumentStatus status="작성 전" /> |
+선수 지식: Java 3~4장.
 
-### 7. Reflection과 동적 프록시
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 5.1 | **제네릭 타입과 메서드**<br />클래스·인터페이스·메서드의 타입 매개변수와 타입 경계를 다룬다. [자료1][java-generics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.2 | **불공변성과 와일드카드**<br />extends·super의 읽기·쓰기 제약을 예제로 확인한다. [자료1][java-generics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.3 | **PECS와 타입 추론**<br />생산자·소비자 관점으로 와일드카드를 선택하고 호출 시 타입 추론을 설명한다. [자료1][java-generics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.4 | **타입 소거와 제네릭의 제약**<br />Raw Type, Reifiable Type, 배열과의 차이를 다룬다. 컴파일러 구현 전체는 제외한다. [자료1][java-generics] | 심화 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 7.1 | `Class` 객체와 타입 정보 조회 | <DocumentStatus status="작성 전" /> |
-| 7.2 | 생성자, 필드, 메서드 조회와 호출 | <DocumentStatus status="작성 전" /> |
-| 7.3 | 애노테이션·제네릭 메타데이터와 접근 제한 | <DocumentStatus status="작성 전" /> |
-| 7.4 | JDK Dynamic Proxy, `Proxy`, `InvocationHandler` | <DocumentStatus status="작성 전" /> |
+### 6. Collections Framework
 
-### 8. Collections Framework
+선수 지식: Java 3.9, 5장.
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 8.1 | `Iterable`, `Collection`과 전체 계층 | <DocumentStatus status="작성 전" /> |
-| 8.2 | List, Set, Queue, Deque와 구현체 선택 | <DocumentStatus status="작성 전" /> |
-| 8.3 | Map, HashMap과 `equals`·`hashCode` | <DocumentStatus status="작성 전" /> |
-| 8.4 | 반복, `Comparable`, `Comparator`, 정렬 | <DocumentStatus status="작성 전" /> |
-| 8.5 | 불변·수정 불가능 컬렉션과 Concurrent Collection 개요 | <DocumentStatus status="작성 전" /> |
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 6.1 | **Iterable, Collection과 컬렉션 계층**<br />Map과 Collection의 관계, 순회와 주요 인터페이스를 다룬다. Java 21의 순서 있는 컬렉션도 위치를 확인한다. [자료1][java-collections] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.2 | **List, Set, Queue와 Deque**<br />주요 구현체의 순서·중복·접근 특성으로 선택 기준을 설명한다. [자료1][java-collections] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.3 | **Map, HashMap과 키의 동등성**<br />equals·hashCode 계약, 키 변경의 위험과 대표적인 조회·갱신을 다룬다. [자료1][java-collections] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.4 | **반복, Comparable과 Comparator**<br />반복자와 정렬 기준을 다룬다. 람다를 이용한 표현은 7장에서 연결한다. [자료1][java-collections] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.5 | **수정 불가능 컬렉션과 불변성**<br />원본을 감싼 뷰와 복사, 요소의 변경 가능성을 구분한다. 동시성 컬렉션은 12.13에서 다룬다. [자료1][java-collections] | 필수 | <DocumentStatus status="작성 전" /> |
 
-### 9. 함수형 Java
+### 7. 람다, Stream과 Optional
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 9.1 | Functional Interface, Lambda, Method Reference | <DocumentStatus status="작성 전" /> |
-| 9.2 | 표준 함수형 인터페이스와 함수 합성 | <DocumentStatus status="작성 전" /> |
-| 9.3 | Stream Pipeline, Lazy Evaluation, 중간·최종 연산 | <DocumentStatus status="작성 전" /> |
-| 9.4 | `map`, `filter`, `flatMap`, `reduce`, Collector | <DocumentStatus status="작성 전" /> |
-| 9.5 | Optional과 Parallel Stream의 주의점 | <DocumentStatus status="작성 전" /> |
+선수 지식: Java 5~6장.
 
-### 10. 표준 API
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 7.1 | **함수형 인터페이스, 람다와 메서드 참조**<br />함수를 전달하는 방법과 캡처한 지역 변수의 제약을 다룬다. [자료1][java-lambdas] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.2 | **표준 함수형 인터페이스와 함수 합성**<br />Predicate, Function, Consumer, Supplier를 중심으로 설명한다. [자료1][java-lambdas] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.3 | **Stream 파이프라인과 지연 실행**<br />소스·중간·최종 연산, 단일 사용과 부수 효과의 주의점을 다룬다. [자료1][java-streams] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.4 | **map, filter, flatMap, reduce와 Collector**<br />변환·필터·집계와 수집을 구분하고 순차 스트림 예제를 작성한다. [자료1][java-streams] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.5 | **Optional과 값의 부재**<br />map·flatMap, 기본값 계산과 반환 타입으로 사용할 때의 기준을 다룬다. 병렬 실행과 분리한다. [자료1][java-optional] | 필수 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 10.1 | 바이트·문자 스트림, Reader·Writer, Buffer, Charset | <DocumentStatus status="작성 전" /> |
-| 10.2 | NIO.2, `Path`, `Files`, 클래스패스 리소스 | <DocumentStatus status="작성 전" /> |
-| 10.3 | `Instant`, Local·Zoned Date Time, Duration, Period | <DocumentStatus status="작성 전" /> |
-| 10.4 | URI, URL, Java HTTP Client | <DocumentStatus status="작성 전" /> |
+### 8. 빌드와 테스트 기초
 
-### 11. 동시성
+선수 지식: Java 1.4, 4~7장.
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 11.1 | Thread, Runnable, Callable, 상태, Interrupt | <DocumentStatus status="작성 전" /> |
-| 11.2 | Race Condition, 원자성, 가시성, 순서 보장 | <DocumentStatus status="작성 전" /> |
-| 11.3 | Java Memory Model과 Happens-before | <DocumentStatus status="작성 전" /> |
-| 11.4 | `synchronized`, `volatile`, Lock, Atomic | <DocumentStatus status="작성 전" /> |
-| 11.5 | ExecutorService, Future, CompletableFuture | <DocumentStatus status="작성 전" /> |
-| 11.6 | Concurrent Collection | <DocumentStatus status="작성 전" /> |
-| 11.7 | Platform Thread와 Virtual Thread | <DocumentStatus status="작성 전" /> |
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 8.1 | **의존성과 빌드 단계**<br />컴파일·테스트·패키징, 의존성 범위를 다룬다. Maven·Gradle 전체 명령 사전은 제외한다. [자료1][maven] · [자료2][gradle] | 필수 | <DocumentStatus status="작성 전" /> |
+| 8.2 | **JUnit Jupiter와 기본 테스트**<br />검증문, 예외·매개변수화 테스트로 앞선 Java 예제를 확인한다. [자료1][junit] | 필수 | <DocumentStatus status="작성 전" /> |
+| 8.3 | **단위·통합 테스트와 테스트 격리**<br />테스트 대상의 경계, 준비·실행·검증과 테스트 대역의 역할을 설명한다. Spring 테스트는 2부에서 다룬다. [자료1][junit] | 필수 | <DocumentStatus status="작성 전" /> |
 
-### 12. JVM 핵심
+### 9. 표준 API와 입출력
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 12.1 | Stack, Heap, Metaspace와 객체 할당 | <DocumentStatus status="작성 전" /> |
-| 12.2 | Class Loading, Linking, Initialization, ClassLoader | <DocumentStatus status="작성 전" /> |
-| 12.3 | Interpreter와 JIT Compiler | <DocumentStatus status="작성 전" /> |
-| 12.4 | Garbage Collection, Stop-the-world, 메모리 누수, OOM | <DocumentStatus status="작성 전" /> |
-| 12.5 | `jcmd`, `jstack`, Thread·Heap Dump, JFR | <DocumentStatus status="작성 전" /> |
+선수 지식: Java 4~8장.
 
-### 13. JDBC 기초
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 9.1 | **바이트·문자 스트림과 인코딩**<br />InputStream·OutputStream, Reader·Writer, 버퍼링과 Charset을 다룬다. [자료1][java-io] | 필수 | <DocumentStatus status="작성 전" /> |
+| 9.2 | **Path, Files와 클래스패스 리소스**<br />파일 경로·읽기·쓰기와 배포된 JAR 안의 리소스 접근을 구분한다. [자료1][java-io] · [자료2][java-classloader] | 필수 | <DocumentStatus status="작성 전" /> |
+| 9.3 | **날짜와 시간**<br />Instant, LocalDateTime, ZonedDateTime, Duration·Period와 시간대 변환을 다룬다. [자료1][java-datetime] | 필수 | <DocumentStatus status="작성 전" /> |
+| 9.4 | **URI, URL과 Java HTTP Client**<br />주소 표현과 동기 HTTP 요청·응답을 다룬다. 비동기 요청은 12.12 학습 뒤 연결한다. [자료1][java-http] | 필수 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 13.1 | JDBC Driver와 DataSource | <DocumentStatus status="작성 전" /> |
-| 13.2 | Connection, PreparedStatement, ResultSet | <DocumentStatus status="작성 전" /> |
-| 13.3 | 파라미터 바인딩, 자원 정리, 예외 처리 | <DocumentStatus status="작성 전" /> |
-| 13.4 | Auto-commit, Commit, Rollback, Connection Pool | <DocumentStatus status="작성 전" /> |
+### 10. 애노테이션
 
-### 14. 빌드와 테스트 기초
+선수 지식: Java 3장, 5장.
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 14.1 | Maven·Gradle의 역할과 프로젝트 구조 | <DocumentStatus status="작성 전" /> |
-| 14.2 | 의존성, 컴파일, 테스트, 패키징 | <DocumentStatus status="작성 전" /> |
-| 14.3 | JUnit Jupiter, Assertion, 예외·Parameterized Test | <DocumentStatus status="작성 전" /> |
-| 14.4 | 단위·통합 테스트, 테스트 격리 | <DocumentStatus status="작성 전" /> |
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 10.1 | **기본 제공·사용자 정의 애노테이션**<br />애노테이션 선언과 요소, 코드에 정보를 남기는 역할을 설명한다. [자료1][java-annotations] | 필수 | <DocumentStatus status="작성 전" /> |
+| 10.2 | **Target, Retention, Inherited와 Repeatable**<br />적용 대상·보존 시점·상속·반복 규칙을 다룬다. 실제 런타임 조회는 11.3에서 설명한다. [자료1][java-annotations] | 필수 | <DocumentStatus status="작성 전" /> |
+| 10.3 | **메타 애노테이션과 컴파일 시 처리 개요**<br />애노테이션을 설명하는 애노테이션과 Annotation Processing을 구분한다. 처리기 구현은 제외한다. [자료1][java-annotations] | 심화 | <DocumentStatus status="작성 전" /> |
+
+### 11. Reflection과 동적 프록시
+
+선수 지식: Java 3장, 5장, 10장.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 11.1 | **Class 객체와 타입 정보**<br />Class를 얻는 방법과 타입·상속 관계 조회를 다룬다. [자료1][java-reflection] | 필수 | <DocumentStatus status="작성 전" /> |
+| 11.2 | **생성자·필드·메서드 조회와 호출**<br />리플렉션을 통한 객체 생성과 접근·호출 및 관련 예외를 설명한다. [자료1][java-reflection] | 필수 | <DocumentStatus status="작성 전" /> |
+| 11.3 | **애노테이션·제네릭 정보와 접근 제한**<br />런타임 메타데이터 조회와 모듈 경계에 따른 접근 제한을 다룬다. 모듈 시스템 전체는 제외한다. [자료1][java-reflection] | 필수 | <DocumentStatus status="작성 전" /> |
+| 11.4 | **JDK 동적 프록시**<br />Proxy·InvocationHandler와 인터페이스 호출 위임을 다룬다. Spring AOP 구현은 2부에서 설명한다. [자료1][java-proxy] | 필수 | <DocumentStatus status="작성 전" /> |
+
+### 12. 스레드와 동시성
+
+선수 지식: Java 3~8장. 입출력 예제는 9장.
+
+12.1~12.7에서 스레드와 공유 상태의 기초를 익힌 뒤 실행 관리·비동기 처리로 넘어갑니다. 심화 항목은 첫 학습에서 건너뛰고 돌아와도 됩니다. Java 21에서 Preview 기능인 Structured Concurrency·Scoped Values는 이번 범위에서 제외합니다.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 12.1 | **프로세스, 스레드와 동시·병렬 실행**<br />실행 단위와 공유 자원을 구분하고 CPU 작업·입출력 대기의 차이를 설명한다. [자료1][java-thread] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.2 | **Thread와 Runnable: 생성과 시작**<br />start와 run의 차이, 작업 정의, 스레드 이름과 생성 방법을 예제로 확인한다. [자료1][java-thread] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.3 | **스레드 상태와 대기**<br />Thread.State, sleep·join, 데몬 스레드를 다룬다. 실행 순서를 시간 지연으로 보장하지 않는다. [자료1][java-thread] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.4 | **Interrupt와 협력적 종료**<br />중단 요청·상태 확인, InterruptedException 처리와 종료 책임을 다룬다. 강제 종료 API는 사용하지 않는다. [자료1][java-thread] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.5 | **공유 상태와 경쟁 조건**<br />원자성·가시성·순서 문제를 구분하고 공유 가변 상태를 줄이는 방법을 설명한다. [자료1][java-jmm] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.6 | **synchronized와 모니터**<br />임계 구역, 인스턴스·클래스 락과 재진입을 다룬다. 락 구현 내부 구조는 제외한다. [자료1][java-jmm] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.7 | **Java Memory Model, happens-before와 volatile**<br />안전한 공개와 가시성 보장, volatile만으로 복합 연산을 보호할 수 없는 이유를 다룬다. [자료1][java-jmm] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.8 | **ReentrantLock과 조건 대기**<br />tryLock·finally 해제, Condition과 wait·notify의 대응을 다룬다. 조건 반복 검사도 포함한다. [자료1][java-locks] · [자료2][java-jmm] | 심화 | <DocumentStatus status="작성 전" /> |
+| 12.9 | **Atomic과 CAS**<br />AtomicInteger 등을 이용한 원자적 갱신과 여러 변수의 불변식 보호 한계를 설명한다. [자료1][java-atomic] | 심화 | <DocumentStatus status="작성 전" /> |
+| 12.10 | **ExecutorService와 스레드 풀**<br />작업 제출, 큐·풀 크기·거부 정책, shutdown·종료 대기를 다룬다. 작업 유형별 자원 한계를 확인한다. [자료1][java-executor] · [자료2][java-threadpool] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.11 | **Callable, Future와 작업 취소**<br />반환값·예외, get의 대기·타임아웃, cancel과 interrupt의 관계를 다룬다. [자료1][java-future] · [자료2][java-executor] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.12 | **CompletableFuture와 비동기 작업 조합**<br />thenApply·thenCompose·조합, 실행기 선택, 예외·타임아웃과 취소의 한계를 다룬다. [자료1][java-completable] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.13 | **동시성 컬렉션과 BlockingQueue**<br />ConcurrentHashMap의 복합 연산과 생산자·소비자 구성을 다룬다. 모든 동시성 도구 사전은 제외한다. [자료1][java-concurrent] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.14 | **ThreadLocal과 스레드별 상태**<br />get·set·remove, 풀 재사용 시 정리 책임과 다른 스레드로 상태가 자동 전달된다는 오해를 다룬다. [자료1][java-threadlocal] · [자료2][java-thread] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.15 | **교착 상태, 기아와 라이브락**<br />문제 양상, 락 획득 순서와 대기 제한을 설명한다. 진단 명령 전체는 13.5에서 다룬다. [자료1][java-jmm] · [자료2][java-locks] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.16 | **ForkJoinPool과 병렬 스트림**<br />작업 분할, 공용 풀, 부수 효과·블로킹·성능 측정의 주의점을 다룬다. 직접 스케줄러 구현은 제외한다. [자료1][java-forkjoin] · [자료2][java-streams] | 심화 | <DocumentStatus status="작성 전" /> |
+| 12.17 | **플랫폼 스레드와 가상 스레드**<br />Java 21의 생성 방법, 입출력 중심 사용, 자원 제한과 pinning을 다룬다. 이후 버전의 동작과 혼합하지 않는다. [자료1][java-virtual] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.18 | **동시성 테스트와 문제 재현**<br />CountDownLatch 등으로 실행 지점을 조율하고 타임아웃·정리를 포함해 테스트한다. 한 번 통과한 테스트를 안전성 증명으로 간주하지 않는다. [자료1][java-latch] · [자료2][java-concurrent] | 심화 | <DocumentStatus status="작성 전" /> |
+
+### 13. JVM 핵심
+
+선수 지식: Java 1장, 3장, 12장의 필수 항목.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 13.1 | **실행 시 메모리 영역과 객체 할당**<br />Stack·Heap과 메서드 영역의 역할을 다룬다. Metaspace는 HotSpot 구현 개념으로 구분한다. [자료1][java-jvm-structure] | 필수 | <DocumentStatus status="작성 전" /> |
+| 13.2 | **클래스 로딩, 연결과 초기화**<br />Loading·Linking·Initialization, ClassLoader 위임과 초기화 시점을 다룬다. [자료1][java-jvm-loading] · [자료2][java-classloader] | 필수 | <DocumentStatus status="작성 전" /> |
+| 13.3 | **인터프리터와 JIT 컴파일**<br />실행 중 최적화와 워밍업을 개괄한다. JVM 사양의 요구사항과 HotSpot 구현을 구분한다. [자료1][java-vm-guide] | 심화 | <DocumentStatus status="작성 전" /> |
+| 13.4 | **Garbage Collection과 메모리 문제**<br />도달 가능성, Stop-the-world, 메모리 누수와 OOM을 다룬다. 수집기별 튜닝은 제외한다. [자료1][java-gc] | 필수 | <DocumentStatus status="작성 전" /> |
+| 13.5 | **JVM 진단 도구와 덤프 읽기**<br />jcmd·jstack, 스레드·힙 덤프와 JFR의 기본 용도를 다룬다. 운영 환경의 수집 비용·민감 정보도 고려한다. [자료1][java-troubleshooting] | 심화 | <DocumentStatus status="작성 전" /> |
+
+### 14. JDBC 기초
+
+선수 지식: Java 4장, 8~9장. 기본 SQL은 선수 지식으로 별도 확인.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 14.1 | **JDBC Driver와 DataSource**<br />Java와 데이터베이스를 연결하는 역할을 설명한다. SQL·데이터베이스 내부 구조 전체는 제외한다. [자료1][java-jdbc] · [자료2][java-datasource] | 필수 | <DocumentStatus status="작성 전" /> |
+| 14.2 | **Connection, PreparedStatement와 ResultSet**<br />연결·SQL 실행·결과 조회의 최소 흐름을 다룬다. [자료1][java-jdbc] | 필수 | <DocumentStatus status="작성 전" /> |
+| 14.3 | **파라미터 바인딩과 자원 정리**<br />값 바인딩, try-with-resources와 SQLException의 처리 경계를 다룬다. [자료1][java-jdbc] | 필수 | <DocumentStatus status="작성 전" /> |
+| 14.4 | **Auto-commit, Commit·Rollback과 연결 풀**<br />트랜잭션 경계와 연결 재사용·반납을 설명한다. Spring의 트랜잭션 추상화는 2부에서 다룬다. [자료1][java-connection] · [자료2][java-datasource] | 필수 | <DocumentStatus status="작성 전" /> |
 
 ## 2부: Spring Framework 6.2.19
 
-Spring Framework는 핵심 공식 문서를 선별해 번역하고, 필요한 부분에 별도 해설을 추가합니다.
+핵심 공식 문서를 **선별 번역**합니다. 각 항목의 링크와 범위에 해당하는 원문 구조를 유지하며, 비교·배경·직접 만든 예제는 `TranslatorNote`로 구분합니다. 여러 원문을 사용하면 구간마다 출처를 기록합니다.
 
 ### 1. IoC와 DI 컨테이너
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 1.1 | Spring Framework의 역할, IoC, DI, Bean | <DocumentStatus status="작성 전" /> |
-| 1.2 | BeanFactory와 ApplicationContext | <DocumentStatus status="작성 전" /> |
-| 1.3 | Bean Definition, 이름, 별칭 | <DocumentStatus status="작성 전" /> |
-| 1.4 | 생성자·Setter·필드 주입 | <DocumentStatus status="작성 전" /> |
-| 1.5 | 자동 주입 후보, 순환 참조, Lazy Initialization | <DocumentStatus status="작성 전" /> |
-| 1.6 | Singleton, Prototype, Web Scope | <DocumentStatus status="작성 전" /> |
-| 1.7 | Bean 생명주기와 초기화·소멸 Callback | <DocumentStatus status="작성 전" /> |
-| 1.8 | BeanPostProcessor와 BeanFactoryPostProcessor | <DocumentStatus status="작성 전" /> |
-| 1.9 | `Autowired`, `Primary`, `Qualifier` | <DocumentStatus status="작성 전" /> |
-| 1.10 | Component Scan과 Stereotype Annotation | <DocumentStatus status="작성 전" /> |
-| 1.11 | `Configuration`과 `Bean` | <DocumentStatus status="작성 전" /> |
-| 1.12 | Environment, Profile, PropertySource, Resource | <DocumentStatus status="작성 전" /> |
+선수 지식: Java의 객체지향·예외·애노테이션·Reflection 필수 항목.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 1.1 | **Spring Framework의 역할, IoC, DI와 Bean**<br />컨테이너 소개와 Bean의 의미를 번역한다. Java 객체 생성과의 비교는 번역자 노트로 구분한다. [자료1][sf-overview] · [자료2][sf-ioc] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.2 | **BeanFactory와 ApplicationContext**<br />컨테이너 개요와 두 인터페이스의 역할 차이를 선별한다. 모든 메서드 사전은 제외한다. [자료1][sf-container] · [자료2][sf-beanfactory] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.3 | **Bean Definition, 이름과 별칭**<br />Bean 메타데이터·이름·인스턴스 생성에 해당하는 절을 다룬다. [자료1][sf-beans] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.4 | **Configuration과 Bean으로 설정하기**<br />Java 설정의 기본, 컨테이너 생성과 설정 조합을 선별한다. Bean 메서드 호출과 프록시 차이도 포함한다. [자료1][sf-java-config] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.5 | **의존성 주입과 순환 참조**<br />생성자·Setter 주입과 순환 의존성을 다룬다. 필드 주입은 애노테이션 원문 구간을 별도 표시한다. [자료1][sf-di] · [자료2][sf-autowired] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.6 | **자동 주입 후보와 Autowired·Primary·Fallback·Qualifier**<br />후보 선택과 한정자 규칙을 다룬다. 의존성 주입 자체의 설명은 1.5를 참조한다. [자료1][sf-autowired] · [자료2][sf-primary] · [자료3][sf-qualifiers] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.7 | **Component Scan과 Stereotype Annotation**<br />컴포넌트 탐색, 등록과 필터의 기본을 선별한다. [자료1][sf-scan] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.8 | **Singleton, Prototype과 Web Scope**<br />스코프별 인스턴스 범위와 서로 다른 스코프의 의존성 주입을 다룬다. [자료1][sf-scopes] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.9 | **Bean 생명주기와 초기화·소멸 콜백**<br />생명주기 콜백과 PostConstruct·PreDestroy를 선별한다. [자료1][sf-lifecycle] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.10 | **컨테이너 확장 지점**<br />BeanPostProcessor와 BeanFactoryPostProcessor의 적용 대상·시점을 구분한다. [자료1][sf-extension] | 심화 | <DocumentStatus status="작성 전" /> |
+| 1.11 | **지연 초기화와 초기화 순서**<br />Lazy-initialized Beans와 depends-on을 선별한다. 순환 참조 해결책으로 일반화하지 않는다. [자료1][sf-lazy] · [자료2][sf-depends-on] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.12 | **Environment, Profile, PropertySource와 Value**<br />환경 추상화와 속성 주입을 다룬다. Boot의 설정 파일 탐색·우선순위는 3부에서 다룬다. [자료1][sf-environment] · [자료2][sf-value] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.13 | **Resource와 ResourceLoader**<br />classpath·파일·URL 리소스 추상화와 읽기 접근을 선별한다. 설정값 주입과 분리한다. [자료1][sf-resources] | 필수 | <DocumentStatus status="작성 전" /> |
 
 ### 2. 타입 변환, 데이터 바인딩, 검증
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 2.1 | Converter, ConverterFactory, ConversionService | <DocumentStatus status="작성 전" /> |
-| 2.2 | Formatter와 FormatterRegistry | <DocumentStatus status="작성 전" /> |
-| 2.3 | DataBinder와 BindingResult | <DocumentStatus status="작성 전" /> |
-| 2.4 | Validator, Errors, Validation Error Code | <DocumentStatus status="작성 전" /> |
-| 2.5 | Jakarta Bean Validation과 MVC 연동 | <DocumentStatus status="작성 전" /> |
+선수 지식: Spring 1장.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 2.1 | **Converter와 ConversionService**<br />타입 변환, ConverterFactory와 변환 서비스 등록을 선별한다. [자료1][sf-conversion] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.2 | **Formatter와 FormatterRegistry**<br />문자열 표현의 파싱·출력, 형식 지정과 등록을 다룬다. [자료1][sf-format] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.3 | **DataBinder와 BindingResult**<br />프로퍼티 바인딩·결과·허용 필드를 다룬다. MVC 요청 처리와 구분한다. [자료1][sf-binding] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.4 | **Validator, Errors와 검증 오류 코드**<br />Spring Validator 계약과 오류 수집·메시지 코드 해석을 선별한다. [자료1][sf-validator] · [자료2][sf-errors] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.5 | **Jakarta Bean Validation 연동**<br />검증기 구성과 메서드 검증의 기본을 다룬다. MVC 요청 검증은 5.7에서 다룬다. [자료1][sf-bean-validation] | 필수 | <DocumentStatus status="작성 전" /> |
 
 ### 3. AOP와 프록시
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 3.1 | 횡단 관심사와 AOP 핵심 용어 | <DocumentStatus status="작성 전" /> |
-| 3.2 | Spring AOP의 범위 | <DocumentStatus status="작성 전" /> |
-| 3.3 | JDK Dynamic Proxy와 CGLIB | <DocumentStatus status="작성 전" /> |
-| 3.4 | `Aspect`, Pointcut, Advice | <DocumentStatus status="작성 전" /> |
-| 3.5 | 프록시 호출 흐름과 Self-invocation | <DocumentStatus status="작성 전" /> |
-| 3.6 | `Transactional`, `Async`, `Cacheable`과 프록시 | <DocumentStatus status="작성 전" /> |
+선수 지식: Java의 동적 프록시, Spring 1장.
 
-### 4. 트랜잭션
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 3.1 | **횡단 관심사와 AOP 핵심 용어**<br />Aspect·Join Point·Advice·Pointcut 등 핵심 용어에 해당하는 원문을 선별한다. [자료1][sf-aop-concepts] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.2 | **Spring AOP의 범위**<br />Spring AOP의 목적·적용 범위와 AspectJ와의 차이를 다룬다. weaving 심화는 제외한다. [자료1][sf-aop-capabilities] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.3 | **JDK 동적 프록시와 CGLIB**<br />프록시 선택 기준, 인터페이스·클래스 기반 프록시의 제한을 선별한다. [자료1][sf-aop-proxy] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.4 | **Aspect, Pointcut과 Advice**<br />애노테이션 방식 설정·선언과 기본 Advice를 다룬다. XML AOP·저수준 API는 제외한다. [자료1][sf-aspect] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.5 | **프록시 호출과 Self-invocation**<br />프록시를 거치는 호출과 내부 호출의 차이 및 공식 문서의 대응 방식을 다룬다. [자료1][sf-aop-proxy] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.6 | **Transactional·Async·Cacheable의 프록시 적용**<br />각 공식 문서의 proxy 모드 관련 구간을 구분해 선별한다. 공통점 비교는 번역자 노트로 작성한다. [자료1][sf-tx-annotation] · [자료2][sf-scheduling] · [자료3][sf-cache] | 심화 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 4.1 | 데이터베이스 트랜잭션과 Spring 추상화 | <DocumentStatus status="작성 전" /> |
-| 4.2 | PlatformTransactionManager와 Programmatic Transaction | <DocumentStatus status="작성 전" /> |
-| 4.3 | 선언적 트랜잭션과 `Transactional` | <DocumentStatus status="작성 전" /> |
-| 4.4 | 트랜잭션 프록시와 메서드 경계 | <DocumentStatus status="작성 전" /> |
-| 4.5 | Rollback 규칙과 예외 | <DocumentStatus status="작성 전" /> |
-| 4.6 | Propagation, Isolation, Timeout, Read-only | <DocumentStatus status="작성 전" /> |
-| 4.7 | JDBC와 JPA 트랜잭션 연동 | <DocumentStatus status="작성 전" /> |
+### 4. 트랜잭션과 데이터 접근 기초
+
+선수 지식: Java JDBC·예외·스레드 기초, Spring 1~3장.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 4.1 | **Spring 트랜잭션 추상화**<br />트랜잭션 지원 모델과 추상화를 선별한다. 데이터베이스 트랜잭션의 기초 비교는 별도 해설로 구분한다. [자료1][sf-tx-abstraction] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.2 | **PlatformTransactionManager와 프로그래밍 방식 트랜잭션**<br />트랜잭션 관리자와 TransactionTemplate의 사용 경계를 다룬다. [자료1][sf-tx-abstraction] · [자료2][sf-tx-programmatic] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.3 | **선언적 트랜잭션과 Transactional**<br />애노테이션 활성화·적용 위치와 설정의 기본을 선별한다. [자료1][sf-tx-annotation] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.4 | **트랜잭션 프록시와 메서드 경계**<br />선언적 트랜잭션 구현과 실제 적용 경계를 다룬다. 일반 프록시 원리는 3.5를 참조한다. [자료1][sf-tx-implementation] · [자료2][sf-tx-annotation] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.5 | **Rollback 규칙과 예외**<br />기본 규칙과 명시적 rollback 조건, 예외 유형·패턴 지정의 주의점을 선별한다. [자료1][sf-tx-rollback] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.6 | **트랜잭션 전파**<br />REQUIRED·REQUIRES_NEW·NESTED, 논리·물리 트랜잭션과 자원 제약을 다룬다. [자료1][sf-tx-propagation] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.7 | **Isolation, Timeout과 Read-only**<br />Transactional의 실행 속성과 트랜잭션 관리자별 적용 한계를 다룬다. 데이터베이스 락 내부 구조는 제외한다. [자료1][sf-tx-annotation] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.8 | **Spring JDBC와 트랜잭션 연동**<br />JdbcTemplate·JdbcClient의 역할, 연결 관리·예외 변환과 트랜잭션 참여를 선별한다. Boot 자동 설정은 제외한다. [자료1][sf-jdbc] · [자료2][sf-jdbc-connections] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.9 | **JPA 연동과 트랜잭션**<br />EntityManagerFactory·JpaTransactionManager의 연동 개요를 선별한다. 전체 매핑·Repository 사용법은 제외한다. [자료1][sf-jpa] | 필수 | <DocumentStatus status="작성 전" /> |
 
 ### 5. Spring MVC
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 5.1 | HTTP, Servlet, Front Controller | <DocumentStatus status="작성 전" /> |
-| 5.2 | DispatcherServlet과 요청 처리 흐름 | <DocumentStatus status="작성 전" /> |
-| 5.3 | HandlerMapping, HandlerAdapter, ViewResolver | <DocumentStatus status="작성 전" /> |
-| 5.4 | Controller, RestController, RequestMapping | <DocumentStatus status="작성 전" /> |
-| 5.5 | Controller 메서드 인자와 반환 타입 | <DocumentStatus status="작성 전" /> |
-| 5.6 | RequestBody, ResponseEntity, HTTP Message Converter | <DocumentStatus status="작성 전" /> |
-| 5.7 | 데이터 바인딩과 Validation | <DocumentStatus status="작성 전" /> |
-| 5.8 | ExceptionHandler와 ControllerAdvice | <DocumentStatus status="작성 전" /> |
-| 5.9 | Filter와 Interceptor | <DocumentStatus status="작성 전" /> |
-| 5.10 | Spring MVC Java Configuration | <DocumentStatus status="작성 전" /> |
+선수 지식: Java 입출력·예외, Spring 1~4장. 기본 HTTP 요청·응답은 선수 지식.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 5.1 | **Servlet 기반 Spring MVC 개요**<br />Spring MVC 소개를 번역한다. HTTP·Servlet·Front Controller의 배경 설명은 번역자 노트로 구분한다. [자료1][sf-mvc] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.2 | **DispatcherServlet과 요청 처리 흐름**<br />DispatcherServlet의 처리 순서와 컨텍스트 구조를 선별한다. [자료1][sf-dispatcher] · [자료2][sf-processing] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.3 | **HandlerMapping, HandlerAdapter와 ViewResolver**<br />특수 Bean 유형의 역할을 다룬다. JSP·템플릿 엔진별 사용법은 제외한다. [자료1][sf-special-beans] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.4 | **Controller, RestController와 RequestMapping**<br />컨트롤러 선언과 경로·HTTP 메서드·콘텐츠 유형에 따른 매핑을 선별한다. [자료1][sf-controller] · [자료2][sf-mapping] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.5 | **Controller 메서드 인자와 반환 타입**<br />자주 사용하는 요청 인자와 반환 타입을 선별한다. 전체 애노테이션 사전은 제외한다. [자료1][sf-handler-methods] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.6 | **RequestBody, ResponseEntity와 메시지 변환**<br />요청 본문 읽기·응답 제어와 HTTP Message Converter를 선별한다. [자료1][sf-request-body] · [자료2][sf-response-entity] · [자료3][sf-message-conversion] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.7 | **웹 요청의 데이터 바인딩과 검증**<br />ModelAttribute·InitBinder와 MVC 검증·오류 처리를 선별한다. 검증기 구성 자체는 2장을 참조한다. [자료1][sf-model-attribute] · [자료2][sf-initbinder] · [자료3][sf-mvc-validation] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.8 | **ExceptionHandler와 ControllerAdvice**<br />예외 처리 메서드와 공통 컨트롤러 처리를 선별한다. [자료1][sf-mvc-exceptions] · [자료2][sf-controller-advice] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.9 | **Filter와 Interceptor**<br />필터·요청 가로채기 원문을 나누어 번역한다. 실행 위치 비교는 번역자 노트이며 보안 프레임워크 전체는 제외한다. [자료1][sf-filters] · [자료2][sf-interception] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.10 | **Spring MVC Java Configuration**<br />MVC 활성화와 WebMvcConfigurer 기반 확장을 다룬다. Boot의 자동 설정 유지 방법은 3부에서 다룬다. [자료1][sf-mvc-config] | 필수 | <DocumentStatus status="작성 전" /> |
 
 ### 6. Spring 테스트
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 6.1 | TestContext Framework, JUnit, SpringExtension | <DocumentStatus status="작성 전" /> |
-| 6.2 | Context Configuration, 로딩, 캐싱 | <DocumentStatus status="작성 전" /> |
-| 6.3 | 테스트 DI, Profile, Property | <DocumentStatus status="작성 전" /> |
-| 6.4 | 트랜잭션 테스트, Rollback, `Sql` | <DocumentStatus status="작성 전" /> |
-| 6.5 | MockMvc | <DocumentStatus status="작성 전" /> |
-| 6.6 | Standalone과 WebApplicationContext 테스트 | <DocumentStatus status="작성 전" /> |
+선수 지식: Java 8장, Spring 1~5장.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 6.1 | **TestContext Framework와 JUnit 연동**<br />프레임워크의 역할과 SpringExtension 기반 테스트 구성을 선별한다. [자료1][sf-testcontext] · [자료2][sf-junit] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.2 | **컨텍스트 설정, 로딩과 캐싱**<br />Context Configuration·캐시 키·컨텍스트 재사용과 무효화를 다룬다. [자료1][sf-context-config] · [자료2][sf-context-cache] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.3 | **테스트 DI, Profile과 Property**<br />테스트 의존성 주입과 ActiveProfiles·TestPropertySource를 선별한다. [자료1][sf-test-di] · [자료2][sf-test-profiles] · [자료3][sf-test-properties] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.4 | **MockitoBean과 MockitoSpyBean으로 Bean 교체**<br />테스트용 대역과 실제 객체 감싸기, 대상 선택·제약을 다룬다. Mockito 전체 사용법은 제외한다. [자료1][sf-mockito] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.5 | **트랜잭션 테스트와 Sql**<br />테스트 트랜잭션·rollback·SQL 실행을 다룬다. 실제 서버 테스트의 별도 경계는 Boot 테스트에서 연결한다. [자료1][sf-test-transactions] · [자료2][sf-test-sql] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.6 | **MockMvc로 요청과 응답 검증**<br />서버를 띄우지 않는 MVC 테스트의 요청·검증과 기본 구성을 선별한다. [자료1][sf-mockmvc] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.7 | **Standalone과 WebApplicationContext 테스트**<br />두 설정 방식의 범위·차이를 선별한다. Boot 테스트 슬라이스는 3부에서 다룬다. [자료1][sf-mockmvc-setup] | 필수 | <DocumentStatus status="작성 전" /> |
 
 ## 3부: Spring Boot 3.5.16
 
-Spring Framework에서 배운 원리를 Boot가 어떻게 자동 구성하는지 중심으로 번역합니다.
+Framework의 기능을 Boot가 어떻게 자동 구성하는지 중심으로 **선별 번역**합니다. 입문 예제와 내부 구조·운영 적용을 구분하고, 앞에서 배운 기능의 사용법 전체를 반복하지 않습니다. How-to도 핵심 범위를 보충하는 경우 선별하며, 추가 비교·점검표는 `TranslatorNote`로 구분합니다.
 
 ### 1. Spring Boot 시작하기
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 1.1 | Spring Boot가 해결하는 문제 | <DocumentStatus status="작성 전" /> |
-| 1.2 | 첫 Spring Boot 애플리케이션 | <DocumentStatus status="작성 전" /> |
-| 1.3 | 프로젝트 구조, Maven·Gradle, Starter, 의존성 관리 | <DocumentStatus status="작성 전" /> |
-| 1.4 | 실행과 패키징 | <DocumentStatus status="작성 전" /> |
+선수 지식: Spring Framework의 필수 항목.
 
-### 2. 애플리케이션 시작 과정
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 1.1 | **Spring Boot가 해결하는 문제**<br />Boot 소개와 기본 철학을 선별한다. Framework와의 역할 비교는 번역자 노트로 구분한다. [자료1][boot-intro] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.2 | **첫 Spring Boot 애플리케이션**<br />첫 애플리케이션 만들기·실행 예제를 선별한다. 이후 주제의 내부 동작은 개요만 소개한다. [자료1][boot-first] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.3 | **프로젝트·패키지 구조와 애플리케이션 클래스 위치**<br />권장 코드 구조와 기본 패키지·탐색 범위를 다룬다. [자료1][boot-structure] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.4 | **Maven·Gradle, Starter와 의존성 관리**<br />Boot의 빌드 도구 지원·starter·관리 버전을 선별한다. Java 빌드 입문은 반복하지 않는다. [자료1][boot-build] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.5 | **SpringBootApplication의 구성**<br />SpringBootConfiguration·EnableAutoConfiguration·ComponentScan의 결합을 다룬다. [자료1][boot-annotation] | 필수 | <DocumentStatus status="작성 전" /> |
+| 1.6 | **실행 가능한 JAR 만들고 실행하기**<br />최소 패키징·실행 명령을 다룬다. JAR 내부 구조와 운영 이미지 제작은 12장에서 다룬다. [자료1][boot-first] · [자료2][boot-running] | 필수 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 2.1 | SpringApplication과 ApplicationContext 생성 | <DocumentStatus status="작성 전" /> |
-| 2.2 | 애플리케이션 타입, Arguments, Runner, Event | <DocumentStatus status="작성 전" /> |
-| 2.3 | 종료와 Graceful Shutdown | <DocumentStatus status="작성 전" /> |
+### 2. 애플리케이션 시작과 종료
 
-### 3. SpringBootApplication
+선수 지식: Boot 1장.
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 3.1 | SpringBootConfiguration, EnableAutoConfiguration, ComponentScan | <DocumentStatus status="작성 전" /> |
-| 3.2 | 패키지 구조와 애플리케이션 클래스 위치 | <DocumentStatus status="작성 전" /> |
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 2.1 | **SpringApplication과 컨텍스트 생성**<br />기동과 컨텍스트 생성·애플리케이션 타입 선택을 선별한다. 소스 코드 전체 호출 추적은 제외한다. [자료1][boot-application] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.2 | **Arguments, ApplicationRunner와 CommandLineRunner**<br />실행 인자 접근과 기동 후 작업에 해당하는 절을 선별한다. [자료1][boot-application] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.3 | **애플리케이션 이벤트와 기동 실패 진단**<br />이벤트 순서·리스너와 실패 분석의 기본을 선별한다. 이벤트 비교 해설은 번역자 노트로 구분한다. [자료1][boot-application] | 필수 | <DocumentStatus status="작성 전" /> |
+| 2.4 | **애플리케이션 종료와 종료 코드**<br />컨텍스트 종료·종료 코드에 해당하는 절을 다룬다. 웹 요청의 종료 유예는 6.5에서 다룬다. [자료1][boot-application] | 필수 | <DocumentStatus status="작성 전" /> |
 
-### 4. Auto-configuration
+### 3. Auto-configuration
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 4.1 | 자동 설정의 목적과 적용 과정 | <DocumentStatus status="작성 전" /> |
-| 4.2 | Conditional Annotation과 조건부 설정 | <DocumentStatus status="작성 전" /> |
-| 4.3 | 사용자 Bean과 Auto-configuration Back-off | <DocumentStatus status="작성 전" /> |
-| 4.4 | 자동 설정 제외와 직접 대체 | <DocumentStatus status="작성 전" /> |
-| 4.5 | Condition Evaluation Report와 디버깅 | <DocumentStatus status="작성 전" /> |
+선수 지식: Spring의 Bean 등록·조건 설정 기초, Boot 1~2장.
 
-### 5. 외부 설정
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 3.1 | **자동 설정의 목적과 적용 과정**<br />자동 설정 사용과 활성화 범위를 선별한다. 내부 구현 분석은 추가 해설로 구분한다. [자료1][boot-auto] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.2 | **Conditional Annotation과 조건부 설정**<br />Bean·클래스·속성 조건의 기본을 선별한다. 배포용 starter 제작 전체는 제외한다. [자료1][boot-custom-auto] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.3 | **사용자 Bean과 자동 설정의 Back-off**<br />사용자 정의 Bean이 있을 때 기본 자동 설정이 물러나는 조건을 다룬다. [자료1][boot-auto] · [자료2][boot-custom-auto] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.4 | **자동 설정 제외와 직접 대체**<br />특정 자동 설정 제외·사용자 설정으로 대체하는 범위를 선별한다. [자료1][boot-auto] | 필수 | <DocumentStatus status="작성 전" /> |
+| 3.5 | **조건 평가 보고서와 디버깅**<br />디버그 모드와 조건 평가 보고서를 읽는 범위를 다룬다. 운영 엔드포인트 접근은 10장에서 설명한다. [자료1][boot-auto] | 필수 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 5.1 | Property Source와 설정 우선순위 | <DocumentStatus status="작성 전" /> |
-| 5.2 | Properties, YAML, 환경 변수, 시스템 속성, 명령행 인자 | <DocumentStatus status="작성 전" /> |
-| 5.3 | `Value`와 `ConfigurationProperties` | <DocumentStatus status="작성 전" /> |
-| 5.4 | Relaxed Binding, 중첩 설정, 설정 검증 | <DocumentStatus status="작성 전" /> |
-| 5.5 | Profile, Profile Group, 환경별 설정 | <DocumentStatus status="작성 전" /> |
+### 4. 외부 설정
 
-### 6. 로깅
+선수 지식: Spring 1.12, Boot 1~3장.
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 6.1 | Spring Boot 기본 로깅, SLF4J, Logback | <DocumentStatus status="작성 전" /> |
-| 6.2 | 로그 레벨, 패턴, 파일 로그 | <DocumentStatus status="작성 전" /> |
-| 6.3 | 로깅 설정 파일, 시작 로그, 디버그 모드 | <DocumentStatus status="작성 전" /> |
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 4.1 | **Property Source와 설정 우선순위**<br />설정값 덮어쓰기 순서와 출처 확인을 다룬다. Spring 환경 추상화 자체는 반복하지 않는다. [자료1][boot-external] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.2 | **Properties, YAML과 외부 입력**<br />환경 변수·시스템 속성·명령행 인자와 설정 파일 표현을 선별한다. [자료1][boot-external] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.3 | **설정 파일 탐색과 spring.config.import**<br />기본 탐색 위치, location·additional-location, import와 optional의 의미를 선별한다. [자료1][boot-external] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.4 | **Value와 ConfigurationProperties**<br />개별 값 주입과 구조화된 타입 바인딩을 비교하는 원문 구간을 선별한다. [자료1][boot-external] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.5 | **Relaxed Binding, 중첩 설정과 검증**<br />이름 대응·컬렉션 바인딩·생성자 바인딩·검증을 선별한다. [자료1][boot-external] | 필수 | <DocumentStatus status="작성 전" /> |
+| 4.6 | **Profile, Profile Group과 환경별 설정**<br />프로파일 활성화·그룹과 환경별 설정 파일의 적용을 다룬다. [자료1][boot-profiles] · [자료2][boot-external] | 필수 | <DocumentStatus status="작성 전" /> |
 
-### 7. Servlet 웹 애플리케이션
+### 5. 로깅
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 7.1 | Embedded Servlet Container와 Tomcat 자동 설정 | <DocumentStatus status="작성 전" /> |
-| 7.2 | Spring MVC와 Jackson 자동 설정 | <DocumentStatus status="작성 전" /> |
-| 7.3 | 서버 설정, 정적 리소스, Message Converter | <DocumentStatus status="작성 전" /> |
-| 7.4 | 오류 처리와 오류 응답 | <DocumentStatus status="작성 전" /> |
-| 7.5 | 웹 서버 Graceful Shutdown | <DocumentStatus status="작성 전" /> |
+선수 지식: Boot 2~4장.
 
-### 8. SQL 데이터베이스와 JPA 연동
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 5.1 | **기본 로깅, SLF4J와 Logback**<br />Boot 기본 로깅 구성과 로깅 추상화·구현체의 역할을 다룬다. [자료1][boot-logging] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.2 | **로그 레벨, 패턴과 파일 로그**<br />주요 출력·레벨·파일 설정을 선별한다. 전체 속성 사전은 제외한다. [자료1][boot-logging] | 필수 | <DocumentStatus status="작성 전" /> |
+| 5.3 | **로깅 설정 파일과 초기화 시점**<br />전용 설정 파일·Spring 확장·초기 설정의 제약을 다룬다. 자동 설정 진단은 3.5를 참조한다. [자료1][boot-logging] | 필수 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 8.1 | DataSource, Connection Pool, HikariCP 자동 설정 | <DocumentStatus status="작성 전" /> |
-| 8.2 | JdbcTemplate과 SQL 초기화 | <DocumentStatus status="작성 전" /> |
-| 8.3 | Database Migration 도구 개요 | <DocumentStatus status="작성 전" /> |
-| 8.4 | JPA, Hibernate, EntityManagerFactory 자동 설정 | <DocumentStatus status="작성 전" /> |
-| 8.5 | 트랜잭션 자동 설정과 테스트 데이터베이스 | <DocumentStatus status="작성 전" /> |
+### 6. Servlet 웹 애플리케이션
 
-### 9. Spring Boot 테스트
+선수 지식: Spring MVC, Boot 3~5장.
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 9.1 | SpringBootTest와 Web Environment | <DocumentStatus status="작성 전" /> |
-| 9.2 | 테스트 Profile, Property, Bean 교체 | <DocumentStatus status="작성 전" /> |
-| 9.3 | Test Slice의 목적 | <DocumentStatus status="작성 전" /> |
-| 9.4 | WebMvcTest, DataJpaTest, JsonTest, JdbcTest | <DocumentStatus status="작성 전" /> |
-| 9.5 | MockMvc와 실제 서버 테스트 | <DocumentStatus status="작성 전" /> |
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 6.1 | **내장 Servlet 컨테이너와 Tomcat**<br />내장 웹 서버의 기본 구성과 커스터마이징을 선별한다. 다른 컨테이너별 전체 설정은 제외한다. [자료1][boot-servlet] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.2 | **Spring MVC와 Jackson 자동 설정**<br />MVC·JSON 자동 설정과 사용자 확장 지점을 다룬다. Framework MVC 사용법은 반복하지 않는다. [자료1][boot-servlet] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.3 | **서버 설정, 정적 리소스와 메시지 변환**<br />포트·리소스 처리·Message Converter 확장을 선별한다. [자료1][boot-servlet] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.4 | **오류 처리와 오류 응답**<br />Boot 기본 오류 처리와 사용자 정의, Problem Details 지원을 선별한다. [자료1][boot-servlet] | 필수 | <DocumentStatus status="작성 전" /> |
+| 6.5 | **웹 서버 Graceful Shutdown**<br />새 요청 제한·기존 요청 처리·종료 유예 시간과 서버별 차이를 다룬다. 일반 종료 코드는 2.4를 참조한다. [자료1][boot-shutdown] | 필수 | <DocumentStatus status="작성 전" /> |
 
-### 10. Testcontainers
+### 7. SQL 데이터베이스와 JPA 연동
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 10.1 | Testcontainers의 목적과 생명주기 | <DocumentStatus status="작성 전" /> |
-| 10.2 | 데이터베이스 컨테이너와 Service Connection | <DocumentStatus status="작성 전" /> |
-| 10.3 | `ServiceConnection`, Dynamic Property, 테스트 격리 | <DocumentStatus status="작성 전" /> |
+선수 지식: Java JDBC, Spring 4장, Boot 3~4장.
 
-### 11. Actuator
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 7.1 | **DataSource와 HikariCP 자동 설정**<br />데이터소스 속성·연결 풀 선택과 사용자 설정을 선별한다. [자료1][boot-sql] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.2 | **JdbcTemplate·JdbcClient 자동 설정**<br />SQL 실행 도구의 자동 설정과 주입·조정 범위를 다룬다. 도구 자체의 원리는 Spring 4.8을 참조한다. [자료1][boot-sql] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.3 | **SQL 스크립트와 JPA 스키마 초기화**<br />schema.sql·data.sql, ddl-auto와 초기화 순서·환경별 주의점을 다룬다. 마이그레이션 도구와 역할을 구분한다. [자료1][boot-init] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.4 | **Flyway·Liquibase 연동 개요**<br />Boot의 마이그레이션 실행·설정과 초기화 방식의 선택을 선별한다. 도구별 전체 사용법은 제외한다. [자료1][boot-init] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.5 | **JPA·Hibernate 자동 설정**<br />EntityManagerFactory, 엔티티·Repository 탐색의 연결을 다룬다. 매핑·쿼리·성능 튜닝 전체는 제외한다. [자료1][boot-sql] | 필수 | <DocumentStatus status="작성 전" /> |
+| 7.6 | **트랜잭션 자동 설정과 사용자 정의**<br />트랜잭션 관리자·주요 속성·기본 설정 조정을 선별한다. 테스트 DB 교체는 8.4에서 다룬다. [자료1][boot-data-howto] | 필수 | <DocumentStatus status="작성 전" /> |
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 11.1 | Actuator의 목적과 Endpoint | <DocumentStatus status="작성 전" /> |
-| 11.2 | Health와 Info | <DocumentStatus status="작성 전" /> |
-| 11.3 | Environment, Configuration, Loggers, Mappings, Conditions | <DocumentStatus status="작성 전" /> |
-| 11.4 | Endpoint 노출, HTTP, JMX, 접근 제어 | <DocumentStatus status="작성 전" /> |
-| 11.5 | Custom Health Indicator 개요 | <DocumentStatus status="작성 전" /> |
+### 8. Spring Boot 테스트
 
-### 12. Metrics와 Observability
+선수 지식: Java 8장, Spring 테스트, Boot 3~7장.
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 12.1 | Logging, Metrics, Tracing과 Observability | <DocumentStatus status="작성 전" /> |
-| 12.2 | Micrometer, Meter Registry, Counter, Gauge, Timer | <DocumentStatus status="작성 전" /> |
-| 12.3 | 기본 Metrics와 Tag | <DocumentStatus status="작성 전" /> |
-| 12.4 | Observation, Tracing, Prometheus 연동 개요 | <DocumentStatus status="작성 전" /> |
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 8.1 | **SpringBootTest와 Web Environment**<br />컨텍스트 탐색과 MOCK·RANDOM_PORT 등 실행 범위를 다룬다. [자료1][boot-tests] | 필수 | <DocumentStatus status="작성 전" /> |
+| 8.2 | **테스트 Profile·Property와 Bean 교체**<br />Boot 테스트 설정과 MockitoBean·MockitoSpyBean의 사용 맥락을 선별한다. 교체 원리는 Spring 6.4를 참조한다. [자료1][boot-tests] | 필수 | <DocumentStatus status="작성 전" /> |
+| 8.3 | **Test Slice의 목적과 경계**<br />일부 계층만 자동 구성하는 목적·탐색 범위와 조합 제약을 다룬다. [자료1][boot-tests] | 필수 | <DocumentStatus status="작성 전" /> |
+| 8.4 | **WebMvcTest, DataJpaTest, JsonTest와 JdbcTest**<br />선택한 네 슬라이스의 구성·검증 대상과 테스트 DB 교체를 다룬다. 다른 제품별 슬라이스 사전은 제외한다. [자료1][boot-tests] | 필수 | <DocumentStatus status="작성 전" /> |
+| 8.5 | **MockMvc와 실제 서버 테스트**<br />자동 구성된 MockMvc와 실제 포트 테스트를 비교하고 스레드·트랜잭션 경계 차이를 다룬다. [자료1][boot-tests] | 필수 | <DocumentStatus status="작성 전" /> |
 
-### 13. 패키징과 기본 배포
+### 9. Testcontainers
 
-| 순서 | 학습 문서 | 상태 |
-|---:|---|---|
-| 13.1 | Executable JAR, Fat JAR, Boot Loader | <DocumentStatus status="작성 전" /> |
-| 13.2 | Maven·Gradle 패키징 | <DocumentStatus status="작성 전" /> |
-| 13.3 | 환경 설정 주입과 실행 Profile | <DocumentStatus status="작성 전" /> |
-| 13.4 | Dockerfile과 Container Image 개요 | <DocumentStatus status="작성 전" /> |
-| 13.5 | Cloud Native Buildpacks와 운영 기본 점검 | <DocumentStatus status="작성 전" /> |
+선수 지식: Boot 7~8장. 컨테이너 실행 환경은 별도로 준비.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 9.1 | **Testcontainers 연동과 생명주기**<br />Boot 문서의 컨테이너 선언·기동·종료 범위를 선별한다. 일반 도구 설명은 번역자 노트로 구분한다. [자료1][boot-testcontainers] | 필수 | <DocumentStatus status="작성 전" /> |
+| 9.2 | **데이터베이스 컨테이너와 ServiceConnection**<br />연결 정보 자동 제공·대상 선택을 다룬다. 모든 서비스별 연결 팩토리 사전은 제외한다. [자료1][boot-testcontainers] | 필수 | <DocumentStatus status="작성 전" /> |
+| 9.3 | **DynamicPropertySource와 테스트 격리**<br />직접 연결 속성을 제공하는 방식과 컨테이너·컨텍스트 생명주기 관계를 다룬다. 격리 설계 예시는 추가 해설로 표시한다. [자료1][boot-testcontainers] | 필수 | <DocumentStatus status="작성 전" /> |
+
+### 10. Actuator
+
+선수 지식: Boot 4~6장, 8장.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 10.1 | **Actuator의 목적과 Endpoint**<br />운영 기능과 엔드포인트 개념을 선별한다. 전체 REST API 명세는 제외한다. [자료1][boot-endpoints] | 필수 | <DocumentStatus status="작성 전" /> |
+| 10.2 | **Health와 Info**<br />기본 상태·정보 제공과 노출 범위를 다룬다. [자료1][boot-endpoints] | 필수 | <DocumentStatus status="작성 전" /> |
+| 10.3 | **Environment, Configuration과 진단 엔드포인트**<br />env·configprops·loggers·mappings·conditions의 용도와 민감 정보 취급을 선별한다. [자료1][boot-endpoints] | 필수 | <DocumentStatus status="작성 전" /> |
+| 10.4 | **Endpoint 노출과 접근 제어**<br />HTTP·JMX 노출과 접근 수준·보안을 다룬다. Spring Security 전체 사용법은 제외한다. [자료1][boot-endpoints] | 필수 | <DocumentStatus status="작성 전" /> |
+| 10.5 | **Custom Health Indicator**<br />사용자 정의 상태 점검의 최소 구현·등록과 비용을 다룬다. [자료1][boot-endpoints] | 심화 | <DocumentStatus status="작성 전" /> |
+
+### 11. Metrics와 Observability
+
+선수 지식: Boot 5장, 10장.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 11.1 | **로그, 지표, 추적과 관측 가능성**<br />Boot 관측 기능의 역할을 번역하고 세 신호의 관계는 번역자 노트로 구분한다. [자료1][boot-observability] | 필수 | <DocumentStatus status="작성 전" /> |
+| 11.2 | **Micrometer와 Meter Registry**<br />지표 등록과 Counter·Gauge·Timer의 기본 사용 맥락을 선별한다. Micrometer 전체 레퍼런스는 제외한다. [자료1][boot-metrics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 11.3 | **기본 Metrics와 Tag**<br />기본 제공 지표·사용자 태그·높은 태그 종류 수에 대한 주의점을 다룬다. [자료1][boot-metrics] | 필수 | <DocumentStatus status="작성 전" /> |
+| 11.4 | **Observation, Tracing과 Prometheus 연동**<br />관측·분산 추적·지표 수집의 연결을 개괄한다. 운영 수집 시스템 전체 구축은 제외한다. [자료1][boot-observability] · [자료2][boot-tracing] · [자료3][boot-metrics] | 심화 | <DocumentStatus status="작성 전" /> |
+
+### 12. 패키징과 기본 배포
+
+선수 지식: Boot 1.6, 4장, 6.5, 10~11장.
+
+| 순서 | 학습 문서 · 범위 | 구분 | 상태 |
+|---:|---|---|---|
+| 12.1 | **실행 가능한 JAR의 구조와 Boot Loader**<br />중첩 JAR·클래스 탐색·실행 구조를 선별한다. 처음 실행하는 절차는 1.6을 참조한다. [자료1][boot-jar] | 심화 | <DocumentStatus status="작성 전" /> |
+| 12.2 | **Maven·Gradle의 운영용 패키징**<br />repackage·bootJar와 산출물 구성을 선별한다. 전체 Goal·Task 사전은 제외한다. [자료1][boot-maven] · [자료2][boot-gradle] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.3 | **운영 설정 주입과 실행 Profile**<br />배포 시 외부 설정·환경 분리를 다룬다. 설정 규칙을 다시 번역하지 않고 필요한 절만 참조한다. [자료1][boot-deploy] · [자료2][boot-external] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.4 | **Dockerfile과 컨테이너 이미지**<br />공식 문서의 이미지 구성·레이어와 Dockerfile 관련 범위를 선별한다. Docker 전체 입문은 제외한다. [자료1][boot-container] | 필수 | <DocumentStatus status="작성 전" /> |
+| 12.5 | **Cloud Native Buildpacks와 운영 점검**<br />Buildpacks 이미지 생성 범위를 선별한다. 상태 점검·설정·종료에 대한 종합 체크리스트는 번역자 노트로 구분한다. [자료1][boot-buildpacks] | 심화 | <DocumentStatus status="작성 전" /> |
 
 ## 로드맵 갱신 규칙
 
-1. 작업 브랜치를 만들 때 대상 주제를 선택합니다.
-2. 템플릿으로 초안을 만들고 필요하면 상태를 `작성 중`으로 변경합니다.
-3. 검토와 빌드를 마치면 `draft: true`를 제거합니다.
-4. 상태를 `작성 완료`로 바꾸고 실제 문서 링크를 연결합니다.
-5. 원문 버전이 바뀌면 해당 문서의 기준 버전과 최근 검토일을 갱신합니다.
+1. 대상 분야·번호·제목과 선수 지식, 필수·심화 구분을 확인합니다.
+2. 해당 템플릿으로 비공개 초안을 만들고 조사한 출처·범위를 기록합니다. Java는 독립 해설, Spring·Boot는 선별 번역으로 작성합니다.
+3. 작성자가 초안을 읽고 예제를 확인하며 다듬습니다. 진행 상태의 별도 공개 요청이 없으면 공개 로드맵은 작성 전으로 유지합니다.
+4. 문서 제출 단계에서 검토·빌드를 마치면 `draft: true`를 제거하고 작성 완료 상태와 실제 문서 링크를 함께 반영합니다. 기존 공식 자료 링크는 출처로 유지합니다.
+5. 아직 작성하지 않은 항목은 번호를 조정할 수 있습니다. 이미 시작한 문서의 번호·경로·브랜치를 바꿀 때는 기존 작업을 먼저 확인하며 자동으로 이동하거나 삭제하지 않습니다.
+6. 기준 원문을 갱신할 때는 해당 문서의 버전·원문 구간·검토일을 함께 확인합니다. 다른 버전의 설명을 조용히 섞지 않습니다.
+
+[jvm-intro]: https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-1.html
+[jdk-tools]: https://docs.oracle.com/en/java/javase/21/docs/specs/man/index.html
+[java-packages]: https://dev.java/learn/packages/
+[maven]: https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+[gradle]: https://docs.gradle.org/current/userguide/java_plugin.html
+[java-basics]: https://dev.java/learn/language-basics/
+[java-strings]: https://dev.java/learn/numbers-strings/
+[java-classes]: https://dev.java/learn/classes-objects/
+[java-arguments]: https://dev.java/learn/classes-objects/calling-methods-constructors/
+[java-records]: https://dev.java/learn/records/
+[java-inheritance]: https://dev.java/learn/inheritance/
+[java-interfaces]: https://dev.java/learn/interfaces/
+[java-object]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html
+[java-patterns]: https://dev.java/learn/pattern-matching/
+[java-exceptions]: https://dev.java/learn/exceptions/
+[java-generics]: https://dev.java/learn/generics/
+[java-collections]: https://dev.java/learn/api/collections-framework/
+[java-lambdas]: https://dev.java/learn/lambdas/
+[java-streams]: https://dev.java/learn/api/streams/
+[java-optional]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html
+[junit]: https://docs.junit.org/5.13.4/user-guide/
+[java-io]: https://dev.java/learn/java-io/
+[java-classloader]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassLoader.html
+[java-datetime]: https://dev.java/learn/date-time/
+[java-http]: https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html
+[java-annotations]: https://dev.java/learn/annotations/
+[java-reflection]: https://dev.java/learn/reflection/
+[java-proxy]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/reflect/Proxy.html
+[java-thread]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.html
+[java-jmm]: https://docs.oracle.com/javase/specs/jls/se21/html/jls-17.html
+[java-locks]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/locks/package-summary.html
+[java-atomic]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/atomic/package-summary.html
+[java-executor]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html
+[java-threadpool]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html
+[java-future]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/Future.html
+[java-completable]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html
+[java-concurrent]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/package-summary.html
+[java-threadlocal]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ThreadLocal.html
+[java-forkjoin]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ForkJoinPool.html
+[java-virtual]: https://docs.oracle.com/en/java/javase/21/core/virtual-threads.html
+[java-latch]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CountDownLatch.html
+[java-jvm-structure]: https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-2.html
+[java-jvm-loading]: https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html
+[java-vm-guide]: https://docs.oracle.com/en/java/javase/21/vm/java-hotspot-virtual-machine-performance-enhancements.html
+[java-gc]: https://docs.oracle.com/en/java/javase/21/gctuning/introduction-garbage-collection-tuning.html
+[java-troubleshooting]: https://docs.oracle.com/en/java/javase/21/troubleshoot/diagnostic-tools.html
+[java-jdbc]: https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/package-summary.html
+[java-datasource]: https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/javax/sql/DataSource.html
+[java-connection]: https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/Connection.html
+[sf-overview]: https://docs.spring.io/spring-framework/reference/6.2/overview.html
+[sf-ioc]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/introduction.html
+[sf-container]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/basics.html
+[sf-beanfactory]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/beanfactory.html
+[sf-beans]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/definition.html
+[sf-java-config]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/java.html
+[sf-di]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/dependencies/factory-collaborators.html
+[sf-autowired]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/annotation-config/autowired.html
+[sf-primary]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/annotation-config/autowired-primary.html
+[sf-qualifiers]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/annotation-config/autowired-qualifiers.html
+[sf-scan]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/classpath-scanning.html
+[sf-scopes]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/factory-scopes.html
+[sf-lifecycle]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/factory-nature.html
+[sf-extension]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/factory-extension.html
+[sf-lazy]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/dependencies/factory-lazy-init.html
+[sf-depends-on]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/dependencies/factory-dependson.html
+[sf-environment]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/environment.html
+[sf-value]: https://docs.spring.io/spring-framework/reference/6.2/core/beans/annotation-config/value-annotations.html
+[sf-resources]: https://docs.spring.io/spring-framework/reference/6.2/core/resources.html
+[sf-conversion]: https://docs.spring.io/spring-framework/reference/6.2/core/validation/convert.html
+[sf-format]: https://docs.spring.io/spring-framework/reference/6.2/core/validation/format.html
+[sf-binding]: https://docs.spring.io/spring-framework/reference/6.2/core/validation/beans-beans.html
+[sf-validator]: https://docs.spring.io/spring-framework/reference/6.2/core/validation/validator.html
+[sf-errors]: https://docs.spring.io/spring-framework/reference/6.2/core/validation/conversion.html
+[sf-bean-validation]: https://docs.spring.io/spring-framework/reference/6.2/core/validation/beanvalidation.html
+[sf-aop-concepts]: https://docs.spring.io/spring-framework/reference/6.2/core/aop/introduction-defn.html
+[sf-aop-capabilities]: https://docs.spring.io/spring-framework/reference/6.2/core/aop/introduction-spring-defn.html
+[sf-aop-proxy]: https://docs.spring.io/spring-framework/reference/6.2/core/aop/proxying.html
+[sf-aspect]: https://docs.spring.io/spring-framework/reference/6.2/core/aop/ataspectj.html
+[sf-tx-annotation]: https://docs.spring.io/spring-framework/reference/6.2/data-access/transaction/declarative/annotations.html
+[sf-scheduling]: https://docs.spring.io/spring-framework/reference/6.2/integration/scheduling.html
+[sf-cache]: https://docs.spring.io/spring-framework/reference/6.2/integration/cache/annotations.html
+[sf-tx-abstraction]: https://docs.spring.io/spring-framework/reference/6.2/data-access/transaction/strategies.html
+[sf-tx-programmatic]: https://docs.spring.io/spring-framework/reference/6.2/data-access/transaction/programmatic.html
+[sf-tx-implementation]: https://docs.spring.io/spring-framework/reference/6.2/data-access/transaction/declarative/tx-decl-explained.html
+[sf-tx-rollback]: https://docs.spring.io/spring-framework/reference/6.2/data-access/transaction/declarative/rolling-back.html
+[sf-tx-propagation]: https://docs.spring.io/spring-framework/reference/6.2/data-access/transaction/declarative/tx-propagation.html
+[sf-jdbc]: https://docs.spring.io/spring-framework/reference/6.2/data-access/jdbc/core.html
+[sf-jdbc-connections]: https://docs.spring.io/spring-framework/reference/6.2/data-access/jdbc/connections.html
+[sf-jpa]: https://docs.spring.io/spring-framework/reference/6.2/data-access/orm/jpa.html
+[sf-mvc]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc.html
+[sf-dispatcher]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-servlet.html
+[sf-processing]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-servlet/sequence.html
+[sf-special-beans]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-servlet/special-bean-types.html
+[sf-controller]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann.html
+[sf-mapping]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-requestmapping.html
+[sf-handler-methods]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-methods.html
+[sf-request-body]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-methods/requestbody.html
+[sf-response-entity]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-methods/responseentity.html
+[sf-message-conversion]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/message-converters.html
+[sf-model-attribute]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-methods/modelattrib-method-args.html
+[sf-initbinder]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-initbinder.html
+[sf-mvc-validation]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-validation.html
+[sf-mvc-exceptions]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-exceptionhandler.html
+[sf-controller-advice]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-controller/ann-advice.html
+[sf-filters]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/filters.html
+[sf-interception]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-servlet/handlermapping-interceptor.html
+[sf-mvc-config]: https://docs.spring.io/spring-framework/reference/6.2/web/webmvc/mvc-config.html
+[sf-testcontext]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework.html
+[sf-junit]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework/support-classes.html
+[sf-context-config]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework/ctx-management.html
+[sf-context-cache]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework/ctx-management/caching.html
+[sf-test-di]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework/fixture-di.html
+[sf-test-profiles]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework/ctx-management/env-profiles.html
+[sf-test-properties]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework/ctx-management/property-sources.html
+[sf-mockito]: https://docs.spring.io/spring-framework/reference/6.2/testing/annotations/integration-spring/annotation-mockitobean.html
+[sf-test-transactions]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework/tx.html
+[sf-test-sql]: https://docs.spring.io/spring-framework/reference/6.2/testing/testcontext-framework/executing-sql.html
+[sf-mockmvc]: https://docs.spring.io/spring-framework/reference/6.2/testing/mockmvc.html
+[sf-mockmvc-setup]: https://docs.spring.io/spring-framework/reference/6.2/testing/mockmvc/hamcrest/setup.html
+[boot-intro]: https://docs.spring.io/spring-boot/3.5/index.html
+[boot-first]: https://docs.spring.io/spring-boot/3.5/tutorial/first-application/index.html
+[boot-structure]: https://docs.spring.io/spring-boot/3.5/reference/using/structuring-your-code.html
+[boot-build]: https://docs.spring.io/spring-boot/3.5/reference/using/build-systems.html
+[boot-annotation]: https://docs.spring.io/spring-boot/3.5/reference/using/using-the-springbootapplication-annotation.html
+[boot-running]: https://docs.spring.io/spring-boot/3.5/reference/using/running-your-application.html
+[boot-application]: https://docs.spring.io/spring-boot/3.5/reference/features/spring-application.html
+[boot-auto]: https://docs.spring.io/spring-boot/3.5/reference/using/auto-configuration.html
+[boot-custom-auto]: https://docs.spring.io/spring-boot/3.5/reference/features/developing-auto-configuration.html
+[boot-external]: https://docs.spring.io/spring-boot/3.5/reference/features/external-config.html
+[boot-profiles]: https://docs.spring.io/spring-boot/3.5/reference/features/profiles.html
+[boot-logging]: https://docs.spring.io/spring-boot/3.5/reference/features/logging.html
+[boot-servlet]: https://docs.spring.io/spring-boot/3.5/reference/web/servlet.html
+[boot-shutdown]: https://docs.spring.io/spring-boot/3.5/reference/web/graceful-shutdown.html
+[boot-sql]: https://docs.spring.io/spring-boot/3.5/reference/data/sql.html
+[boot-init]: https://docs.spring.io/spring-boot/3.5/how-to/data-initialization.html
+[boot-data-howto]: https://docs.spring.io/spring-boot/3.5/how-to/data-access.html
+[boot-tests]: https://docs.spring.io/spring-boot/3.5/reference/testing/spring-boot-applications.html
+[boot-testcontainers]: https://docs.spring.io/spring-boot/3.5/reference/testing/testcontainers.html
+[boot-endpoints]: https://docs.spring.io/spring-boot/3.5/reference/actuator/endpoints.html
+[boot-observability]: https://docs.spring.io/spring-boot/3.5/reference/actuator/observability.html
+[boot-metrics]: https://docs.spring.io/spring-boot/3.5/reference/actuator/metrics.html
+[boot-tracing]: https://docs.spring.io/spring-boot/3.5/reference/actuator/tracing.html
+[boot-jar]: https://docs.spring.io/spring-boot/3.5/specification/executable-jar/index.html
+[boot-maven]: https://docs.spring.io/spring-boot/3.5/maven-plugin/packaging.html
+[boot-gradle]: https://docs.spring.io/spring-boot/3.5/gradle-plugin/packaging.html
+[boot-deploy]: https://docs.spring.io/spring-boot/3.5/how-to/deployment/index.html
+[boot-container]: https://docs.spring.io/spring-boot/3.5/reference/packaging/container-images/dockerfiles.html
+[boot-buildpacks]: https://docs.spring.io/spring-boot/3.5/reference/packaging/container-images/cloud-native-buildpacks.html

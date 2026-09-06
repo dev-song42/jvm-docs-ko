@@ -6,10 +6,12 @@
 
 - 전체 학습 순서와 상태의 기준은 `docs/roadmap.mdx`다.
 - Java 문서는 공식 자료를 참고한 개인 학습 정리이며 `templates/study-note.mdx`를 사용한다.
+- Java 초안은 본문과 함께 핵심 개념을 설명하는 의미 있는 시각자료를 최소 1개 포함한다. 선택·출처·검증·예외 기준은 `templates/README.md`의 Java 시각자료 작성 규칙을 따른다.
 - Spring Framework와 Spring Boot 문서는 공식 문서 선별 번역이며 `templates/translation.mdx`를 사용한다.
 - 문서마다 실제 출처, 문서 유형, 기준 버전과 상태를 기록한다.
 - 번역에 추가한 설명은 `TranslatorNote`로 원문과 구분한다.
 - 파일과 디렉터리 이름은 소문자 kebab-case를 사용한다.
+- 학습 문서 본문과 예제 설명에는 로컬 검증 환경의 배포판과 세부 버전(예: Zulu OpenJDK 17.0.11)을 적지 않는다. 버전은 문서 기준 버전과 `SourceInfo`의 `version`으로만 표현하고, 실제 검증 환경은 PR 본문의 검증 항목에 기록한다.
 
 ## 문서 상태
 
@@ -20,13 +22,14 @@
 
 ## 레포 전용 스킬 워크플로
 
-문서 작업은 다음 세 단계를 섞지 않는다.
+문서 작업은 다음 두 스킬로 수행하며, 그 사이에 사용자가 초안을 꼼꼼히 읽고 다듬는다.
 
-1. `start-doc`: 최신 `main`에서 문서별 브랜치를 만들고 비공개 초안을 초기화한다. commit, push, PR은 하지 않는다.
-2. `submit-doc`: 완성 문서를 공개 상태로 전환하고 검증한 뒤 관련 파일만 commit·push하여 `main` 대상 Ready PR을 만든다. 병합하지 않는다.
-3. `release-doc`: PR의 정확한 head와 CI를 확인하고 최종 승인 후 merge commit으로 병합하며 GitHub Pages 배포와 공개 URL을 확인한다. 문서 내용은 수정하지 않는다.
+1. `write-doc`: 최신 `main`에서 문서별 브랜치를 만들거나 기존 문서 브랜치에서 이어 쓴다. 로드맵의 범위·버전에 맞춰 실제 자료를 조사하고 본문·예제·Java 시각자료까지 작성·검증한다. `draft: true`와 `작성 중`을 유지하며 commit, push, PR은 하지 않는다.
+2. `publish-doc`: 사용자가 검토한 문서를 최종 점검하고 필요한 국소 수정을 반영한다. 공개 상태·로드맵·사이드바를 갱신하고 검증한 뒤 관련 파일만 commit·push하여 Ready PR을 만든다. 정확한 PR head와 CI를 확인하고 별도의 최종 병합 승인 후 merge commit으로 병합하며 GitHub Pages와 공개 URL을 확인한다.
 
-각 단계의 상세 절차와 승인 지점은 `.agents/skills/<skill-name>/SKILL.md`를 따른다. 앞 단계가 끝났다는 이유로 다음 단계의 외부 변경 권한까지 추론하지 않는다.
+`Java 1.1 조사해줘`는 조사와 초안 작성까지, `Java 1.1 배포해줘`는 배포 흐름을 요청하는 표현이다. commit·push·PR만 요청하면 그 지점에서 멈춘다. 배포 요청 자체가 최종 PR head에 대한 병합 승인을 대신하지 않는다.
+
+각 스킬의 상세 절차와 승인 지점은 `.agents/skills/<skill-name>/SKILL.md`를 따른다. 초안 완성만으로 사용자 검토 완료나 공개 권한을 추론하지 않는다. 개인 공통 `quiz-me`·`sparring`은 사용자가 원할 때 쓰는 선택적 학습 도구이며 레포에 복제하거나 배포 필수 단계로 만들지 않는다.
 
 ## Git 규칙
 
