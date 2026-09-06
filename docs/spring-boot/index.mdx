@@ -26,21 +26,24 @@ import SourceInfo from '@site/src/components/SourceInfo';
 ## 학습 카테고리
 
 1. Spring Boot 시작하기
-2. 애플리케이션 시작 과정
-3. `SpringBootApplication`
-4. Auto-configuration
-5. 외부 설정
-6. 로깅
-7. Servlet 웹 애플리케이션
-8. SQL 데이터베이스와 JPA 연동
-9. Spring Boot 테스트
-10. Testcontainers
-11. Actuator
-12. Metrics와 Observability
-13. 패키징과 기본 배포
+2. 애플리케이션 시작과 종료
+3. Auto-configuration
+4. 외부 설정
+5. 로깅
+6. Servlet 웹 애플리케이션
+7. SQL 데이터베이스와 JPA 연동
+8. Spring Boot 테스트
+9. Testcontainers
+10. Actuator
+11. Metrics와 Observability
+12. 패키징과 기본 배포
 
 <Link className="button button--primary" to="/roadmap/#3부-spring-boot-3516">Spring Boot 전체 로드맵 보기</Link>
 
 ## 선별 기준
 
 자동 생성되는 전체 속성 목록이나 특정 제품 연동처럼 필요할 때 찾아보면 되는 장은 우선순위를 낮추고, 대부분의 Boot 프로젝트에서 반복해서 사용하는 개념을 먼저 번역합니다.
+
+`@SpringBootApplication`과 프로젝트 구조는 시작하기에서 함께 다룹니다. 일반 종료와 웹 서버의 종료 유예, 첫 JAR 실행과 운영용 패키징은 범위를 구분합니다. 외부 설정에는 파일 탐색·`spring.config.import`, 데이터 접근에는 `JdbcClient`와 초기화·마이그레이션의 역할 구분을 포함합니다.
+
+전체 로드맵에서 각 글의 예정 원문·범위·선수 지식과 필수·심화 구분을 확인합니다. 번역문은 v3.5.16 문서 소스로 고정하며, Framework 기능 자체를 반복 설명하거나 JPA·Spring Security 전체 사용법까지 확장하지 않습니다.
