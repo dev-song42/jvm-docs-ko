@@ -13,9 +13,13 @@ const sidebars: SidebarsConfig = {
       label: '전체 로드맵',
     },
     {
-      type: 'doc',
-      id: 'java/index',
+      type: 'category',
       label: 'Java 21',
+      link: {
+        type: 'doc',
+        id: 'java/index',
+      },
+      items: ['java/platform/java-jvm-jdk'],
     },
     {
       type: 'doc',
