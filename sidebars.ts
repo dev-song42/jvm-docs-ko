@@ -19,7 +19,10 @@ const sidebars: SidebarsConfig = {
         type: 'doc',
         id: 'java/index',
       },
-      items: ['java/platform/java-jvm-jdk'],
+      items: [
+        'java/platform/java-jvm-jdk',
+        'java/platform/compile-bytecode-execution',
+      ],
     },
     {
       type: 'doc',
