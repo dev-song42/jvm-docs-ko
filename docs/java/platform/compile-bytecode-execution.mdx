@@ -1,0 +1,314 @@
+---
+title: 소스 컴파일, 바이트코드, JVM 실행
+sidebar_label: 1.2 소스 컴파일, 바이트코드, JVM 실행
+description: javac와 java로 소스를 컴파일하고 실행하며, 클래스 파일의 의미와 단계별 오류를 확인합니다.
+sidebar_position: 2
+---
+
+import SourceInfo from '@site/src/components/SourceInfo';
+import styles from './compile-bytecode-execution.module.css';
+
+<SourceInfo
+  sourceUrl="https://docs.oracle.com/en/java/javase/21/docs/specs/man/javac.html#description"
+  sourceLabel="JDK 21 도구 문서 — javac"
+  documentType="개인 학습 정리"
+  version="Java 21"
+  status="작성 완료"
+  reviewedAt="2026-09-14"
+>
+  JDK 21의 javac·java·javap 도구 문서와 JLS·JVMS의 Java SE 21 Edition을 참고했습니다.
+  컴파일 입출력, JVM 시작 과정, 클래스 파일과 명령의 의미,
+  대입의 타입 규칙과 정수 나눗셈의 오류를 확인했습니다.
+  자료 확인일은 2026-09-07이며, 설명·예제·흐름도·비교 표를 직접 구성한 학습 정리입니다.
+</SourceInfo>
+
+## 학습 목표
+
+- `.java` 파일을 컴파일한 결과와 프로그램을 실행한 결과를 구분합니다.
+- 소스를 수정한 뒤 다시 컴파일해야 하는 이유를 파일의 변화로 설명합니다.
+- 오류가 컴파일 단계, 실행 준비 단계, 프로그램 실행 중 어디에서 발생했는지 판단합니다.
+
+선수 지식은 [1.1 Java, JVM, JDK의 관계](./java-jvm-jdk.mdx)입니다. JDK의 도구인 `javac`와 `java`를 구분했다면 시작할 수 있습니다. 패키지·클래스패스·JAR의 상세 사용법은 **1.3**, 클래스 로딩과 실행 엔진의 내부 구조는 **13장 JVM 핵심**에서 다룹니다.
+
+## 핵심 개념
+
+### 컴파일은 실행할 프로그램을 준비하는 단계입니다
+
+편집기에서 저장한 `.java` 파일에는 사람이 작성한 Java 소스 코드가 들어 있습니다. **`javac`는 이 소스를 읽어 JVM에서 사용할 클래스 파일을 만듭니다.** 소스의 문법이나 타입 규칙을 어기면 이 단계에서 오류가 납니다. 컴파일러가 `main`을 실행해 프로그램의 모든 동작을 시험하는 것은 아닙니다. [근거: javac Description][javac], [JLS §5.2][assignment]
+
+예를 들어 아래에서 작성할 `Receipt.java`를 컴파일하면 `Receipt.class`가 생깁니다. 수량과 가격을 계산해 화면에 결과를 보여주는 일은 그다음 실행 단계에서 일어납니다.
+
+### 클래스 파일에는 바이트코드와 부가 정보가 들어 있습니다
+
+**바이트코드(bytecode)**는 JVM 명령을 바이트 단위로 표현한 코드입니다. `.class` 파일에는 메서드의 바이트코드뿐 아니라 클래스 이름, 메서드 정보, 파일 형식의 버전 같은 정보도 들어 있습니다. 따라서 클래스 파일 전체를 “명령만 나열한 파일”로 생각하면 빠지는 부분이 있습니다. [근거: JVMS §1.2][jvm-intro], [§4.1][class-file], [§4.7.3][code]
+
+이 파일은 텍스트 편집기로 읽기 위한 Java 소스도, 특정 CPU가 곧바로 실행하는 기계어 파일도 아닙니다. JVM 구현체가 클래스 파일을 읽고 실행 규칙을 구현합니다. JVM이 인터프리터나 기계어 변환을 어떻게 활용하는지는 구현의 영역입니다. [근거: JVMS §1.2][jvm-intro]
+
+### 실행 도구는 JVM에서 시작할 클래스를 지정합니다
+
+이 글의 `java -cp . Receipt`에서 `Receipt`는 **실행을 시작할 클래스 이름**입니다. `java` 실행 도구는 JVM을 시작하고 지정된 클래스의 `main` 메서드가 호출되도록 합니다. `-cp .`은 이 예제의 클래스 파일을 현재 디렉터리에서 찾도록 지정합니다. [근거: java Description·Standard Options][java]
+
+## 동작 원리
+
+### 소스 파일에서 화면 출력까지
+
+<figure className={styles.flow} aria-label="소스 컴파일과 JVM 실행 흐름">
+  <ol className={styles.steps}>
+    <li>
+      <div className={styles.card}>
+        <span className={styles.stage}>1 · 소스 파일</span>
+        <strong><code>Receipt.java</code></strong>
+        <p>직접 작성하고 저장한 Java 코드</p>
+      </div>
+      <div className={styles.transition}>
+        <span aria-hidden="true">↓</span>
+        <strong>컴파일 · <code>javac Receipt.java</code></strong>
+      </div>
+    </li>
+    <li>
+      <div className={styles.card}>
+        <span className={styles.stage}>2 · 클래스 파일</span>
+        <strong><code>Receipt.class</code></strong>
+        <p>JVM 명령인 바이트코드 + 클래스·메서드 등의 정보</p>
+      </div>
+      <div className={styles.transition}>
+        <span aria-hidden="true">↓</span>
+        <strong>실행 요청 · <code>java -cp . Receipt</code></strong>
+      </div>
+    </li>
+    <li>
+      <div className={styles.card}>
+        <span className={styles.stage}>3 · JVM에서 실행</span>
+        <strong>클래스 실행 준비 → <code>main</code> 호출</strong>
+        <p>계산하고 표준 라이브러리의 출력 기능을 호출</p>
+        <p className={styles.result}>표준 출력: <code>1200</code></p>
+      </div>
+    </li>
+  </ol>
+  <figcaption>
+    위에서 아래로 읽습니다. 첫 화살표는 <strong>새 클래스 파일을 만드는 작업</strong>,
+    두 번째 화살표는 <strong>준비된 클래스를 실행하는 요청</strong>입니다.
+    소스를 저장하는 것만으로 두 작업이 자동 실행되지는 않습니다.
+  </figcaption>
+</figure>
+
+이 흐름도는 [javac][javac], [java][java], [JVMS §5.2][startup]를 근거로 직접 작성했습니다. 단일 클래스의 기본 실행 경로를 단순화했으며, IDE의 자동 빌드와 소스 파일 실행 모드, 실행 중 다른 클래스를 읽어 들이는 과정은 생략했습니다.
+
+그림의 **클래스 실행 준비**에는 클래스를 읽어 들이고(로딩), 검증 등 연결에 필요한 일을 수행하며(링크), 클래스 초기화를 하는 과정이 포함됩니다. 그 뒤 시작 클래스의 `main`이 호출됩니다. 실행 중에도 필요한 다른 클래스의 로딩과 링크가 일어날 수 있으므로, “모든 클래스를 미리 읽은 다음에만 실행한다”는 뜻은 아닙니다. [근거: JVMS §5.2·§5.3·§5.4][startup]
+
+## 예제
+
+### 1. 소스를 저장하고 컴파일하기
+
+JDK의 `javac`, `java`, `javap`를 터미널에서 사용할 수 있어야 합니다. `javac --version`과 `java --version`으로 컴파일 도구와 실행 환경이 이 문서의 기준 버전에 맞는지 확인하세요. 명령 자체를 찾을 수 없다면 먼저 JDK 설치와 실행 경로 설정을 확인해야 합니다.
+
+빈 실습 디렉터리를 만들고 아래 내용을 **`Receipt.java`**로 저장합니다. `public class Receipt`의 이름과 파일 이름의 대소문자를 맞춥니다.
+
+```java title="Receipt.java"
+public class Receipt {
+    public static void main(String[] args) {
+        int count = 3;
+        int unitPrice = 400;
+        int total = count * unitPrice;
+        System.out.println(total);
+    }
+}
+```
+
+이 프로그램은 400원짜리 물건 3개의 합계를 출력합니다. `main`의 선언은 실행 시작점의 형태로 받아들이고, 수량·가격·곱셈·출력의 순서에 집중하면 됩니다. `println(int)`는 정수를 출력하고 줄을 끝냅니다. [근거: java Description][java], [PrintStream.println(int)][println]
+
+터미널에서 파일을 저장한 디렉터리로 이동한 뒤 컴파일합니다.
+
+```bash title="소스 파일 컴파일"
+javac Receipt.java
+```
+
+이 예제는 성공하면 별도의 메시지 없이 끝나며, 같은 디렉터리에 `Receipt.class`가 생깁니다. **아직 `1200`은 출력되지 않습니다.** `javac`에 출력 디렉터리 옵션을 주지 않았으므로 소스 옆에 클래스 파일이 만들어집니다. [근거: javac Description·-d 옵션][javac]
+
+### 2. 만들어진 클래스를 실행하기
+
+같은 디렉터리에서 다음 명령을 실행합니다.
+
+```bash title="클래스 실행"
+java -cp . Receipt
+```
+
+```text title="실행 결과"
+1200
+```
+
+여기에는 `.java`나 `.class` 확장자를 붙이지 않습니다. 명령의 마지막 자리는 실행할 **클래스 이름**을 지정하는 자리이기 때문입니다. 파일 이름을 입력했던 `javac Receipt.java`와 비교해 보세요. [근거: java Synopsis][java]
+
+### 3. 바이트코드를 짧게 살펴보기
+
+클래스 파일을 사람이 확인할 수 있게 풀어 보여주는 JDK 도구가 `javap`입니다. `-c` 옵션으로 메서드의 JVM 명령을 확인합니다. [근거: javap Description·Options][javap]
+
+```bash title="생성된 클래스 파일 살펴보기"
+javap -c -classpath . Receipt
+```
+
+직접 컴파일한 예제의 출력에서 `main`의 곱셈 부분만 발췌하면 다음과 같습니다. 전체 출력에는 생성자와 다른 명령도 포함됩니다.
+
+```text title="javap 출력 중 곱셈과 저장 부분"
+6: iload_1
+7: iload_2
+8: imul
+9: istore_3
+```
+
+이 예제에서 앞의 두 명령은 수량과 가격을 계산에 사용할 수 있도록 가져오고, `imul`은 두 `int` 값을 곱합니다. `istore_3`는 결과를 지역 변수의 저장 공간에 넣습니다. 왼쪽 숫자는 소스 코드의 줄 번호가 아니라 메서드 바이트코드 안의 바이트 위치입니다. 명령과 위치는 컴파일러가 만든 결과를 읽은 것이며, 모든 컴파일러가 같은 명령열을 만들어야 한다는 뜻은 아닙니다. [근거: JVMS의 iload 계열·imul·istore 계열][instructions], [Code 속성][code]
+
+지금은 **Java로 쓴 계산이 JVM 명령으로 표현되어 클래스 파일에 들어 있다**는 연결을 확인하면 충분합니다. 각 명령과 JVM의 스택 구조를 외울 필요는 없습니다.
+
+### 4. 소스만 수정하면 실행 결과가 바뀔까?
+
+`Receipt.java`의 `int count = 3;`을 `int count = 4;`로 바꾸고 저장합니다. 이어서 아래 순서대로 확인하세요.
+
+<div className={styles.comparison} role="region" aria-label="소스 수정과 재컴파일 비교" tabIndex={0}>
+
+| 수행한 작업 | 클래스 파일의 상태 | 실행 출력 |
+|---|---|---|
+| 소스만 수정·저장 | 수량이 3일 때 만든 파일이 남아 있음 | `1200` |
+| `javac Receipt.java`를 다시 실행해 성공 | 수량이 4인 소스를 반영한 파일로 갱신 | `1600` |
+
+</div>
+
+각 행의 작업을 마친 뒤 `java -cp . Receipt`로 실행한 결과를 위에서 아래로 비교합니다. 좁은 화면에서는 표를 좌우로 움직여 읽을 수 있습니다. IDE의 자동 컴파일을 사용하지 않는 상황을 가정합니다. **소스의 수정 내용은 다시 컴파일한 뒤 클래스 파일에 반영됩니다.** 도구의 입출력 계약을 바탕으로 직접 구성하고 실행해 확인한 비교입니다. [근거: javac][javac], [java][java]
+
+## 오류가 발생한 단계 구분하기
+
+프로그램이 동작하지 않을 때는 **어떤 명령을 실행했고, 어디까지 성공했는지**부터 확인합니다. 다음 오류들은 일부러 만들어 보는 학습 예제입니다. 진단 메시지의 언어와 세부 문구는 환경에 따라 달라질 수 있습니다.
+
+### 컴파일 오류: 소스의 타입이 맞지 않습니다
+
+`Receipt.java`에서 수량을 선언하는 줄을 아래처럼 바꿉니다.
+
+```java title="컴파일 오류를 만들기 위한 한 줄 변경"
+int count = "3";
+```
+
+`javac Receipt.java`를 실행하면 문자열을 `int` 변수에 넣을 수 없다는 컴파일 오류가 납니다. 확인한 진단의 핵심 문구는 `incompatible types: String cannot be converted to int`입니다. 숫자 `3`과 따옴표로 감싼 문자열 `"3"`은 타입이 다릅니다. [근거: JLS §5.2 Assignment Contexts][assignment]
+
+**이때 다음 실행 단계로 넘어가지 말고 오류를 고칩니다.** 이 실험처럼 이전에 컴파일한 `Receipt.class`가 있으면, 컴파일이 실패해도 예전 파일이 남아 있을 수 있습니다. 따라서 클래스 파일의 존재만으로 이번 컴파일이 성공했다고 판단하면 안 됩니다. 이 단일 파일 실험에서는 이전 결과인 `1600`을 출력하는 파일이 남습니다.
+
+수량 선언을 `int count = 3;`으로 되돌린 뒤 다시 컴파일하면 정상 상태로 돌아옵니다.
+
+### 실행 준비 오류: 시작할 클래스를 찾지 못합니다
+
+정상적으로 컴파일한 뒤, 클래스 이름의 철자를 일부러 바꿔 실행합니다.
+
+```bash title="클래스 이름을 잘못 지정한 실행"
+java -cp . Recepit
+```
+
+실제 이름은 `Receipt`이므로 `Recepit`을 찾을 수 없습니다. 이 예제에서는 기본 클래스를 찾거나 로드할 수 없다는 안내와 `ClassNotFoundException: Recepit`이 나옵니다. `main` 안의 계산은 시작되지 않았습니다. 명령을 `java -cp . Receipt`로 고쳐 실행하세요. [근거: java의 클래스 지정·클래스패스 옵션][java]
+
+같은 이름이라도 다른 디렉터리에서 `-cp .`을 사용하면 파일을 못 찾을 수 있습니다. `.`은 명령을 실행하는 현재 디렉터리입니다. 여기서는 이름과 현재 위치를 확인하는 데 집중하고, 탐색 경로를 구성하는 방법은 1.3에서 배웁니다.
+
+### 실행 중 예외: 컴파일은 됐지만 계산을 마치지 못합니다
+
+다음 파일은 나누어 받을 인원 수를 0으로 설정한 예제입니다.
+
+```java title="Share.java — 실행 중 예외를 확인하는 예제"
+public class Share {
+    public static void main(String[] args) {
+        int people = 0;
+        int perPerson = 12 / people;
+        System.out.println(perPerson);
+    }
+}
+```
+
+```bash title="컴파일 성공 후 실행 중 예외 확인"
+javac Share.java
+java -cp . Share
+```
+
+`javac`는 성공하지만 실행 중 정수를 0으로 나누는 계산에서 `ArithmeticException`이 발생합니다. `println`까지 도달하지 않으므로 계산 결과 대신 표준 오류에 다음 진단이 나옵니다. [근거: JLS §15.17.2][division]
+
+```text title="예외 진단 예시"
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+    at Share.main(Share.java:4)
+```
+
+`Share.java:4`는 이 예제에서 나눗셈을 수행한 소스 줄을 가리킵니다. `people`을 `3`으로 고치고 다시 컴파일·실행하면 `4`가 출력됩니다. **컴파일 성공은 실행 중 예외가 없거나 계산이 요구사항에 맞는다는 보장이 아닙니다.** 예외를 처리하는 방법은 4장에서 이어서 다룹니다.
+
+단계별로 정리하면 다음과 같습니다.
+
+<div className={styles.comparison} role="region" aria-label="오류 발생 단계 비교" tabIndex={0}>
+
+| 실패한 단계 | 이 글의 재현 사례 | 먼저 확인할 것 |
+|---|---|---|
+| 컴파일 | 문자열을 `int`에 대입 | 컴파일러가 가리킨 소스와 타입 |
+| 실행 준비 | `Recepit`으로 잘못 지정 | 클래스 이름과 탐색 위치 |
+| `main` 실행 중 | 정수를 0으로 나눔 | 예외 종류와 소스 위치, 계산에 사용한 값 |
+
+</div>
+
+위에서 아래로 소스 검사, 실행 준비, 실제 연산을 비교합니다. 이 표는 직접 실행한 세 사례를 묶은 것으로 모든 Java 오류의 분류표는 아닙니다. 일상적인 “오류”라는 표현과 Java 타입 이름인 `Error`, `Exception`의 구분도 이후 예외 문서에서 다룹니다.
+
+## 주의할 점
+
+### 소스 파일 실행 모드도 내부에서 컴파일합니다
+
+JDK에서는 `java Receipt.java`처럼 소스 파일을 지정하는 실행 모드도 제공합니다. 이 경우 소스를 메모리로 컴파일한 다음 실행하며, 실습 디렉터리에 컴파일 결과를 `.class` 파일로 남기지 않습니다. 컴파일 단계가 사라진 것이 아니라 한 번의 명령으로 컴파일과 실행을 요청한 것입니다. [근거: java의 Source-File Mode][source-mode]
+
+이 글의 파일 변화 실험은 `javac Receipt.java`와 `java -cp . Receipt`를 따로 실행하는 방식입니다. 두 방식을 섞으면 “언제 소스 수정이 반영되는가”를 관찰하기 어려워집니다.
+
+### 클래스 파일에도 지원되는 버전이 있습니다
+
+클래스 파일에는 버전 정보가 있고, JVM이 그 형식을 지원해야 읽을 수 있습니다. 더 최신 환경에서 만든 클래스 파일을 오래된 실행 환경에서 실행할 수 있다고 가정하면 안 됩니다. 지원하지 않는 클래스 파일 버전은 `UnsupportedClassVersionError`의 원인이 됩니다. 이 오류를 만나면 `javac --version`과 `java --version`부터 비교합니다. [근거: JVMS §4.1][class-file], [UnsupportedClassVersionError API][class-version-error]
+
+### 컴파일러와 JVM 내부의 컴파일을 구분합니다
+
+이 글의 **소스 컴파일**은 `javac`가 Java 소스를 클래스 파일로 바꾸는 작업입니다. JVM 구현체가 실행 과정에서 코드를 기계어로 바꾸는 작업은 별도의 층위입니다. “JVM에 JIT 컴파일러가 있다”는 설명을 `javac`가 소스를 준비하는 단계와 합쳐 이해하지 마세요. 인터프리터·JIT의 상세 동작과 최적화는 13장에서 다룹니다. [근거: JVMS §1.2][jvm-intro]
+
+## 다른 기술과 연결되는 부분
+
+- **1.3 패키지, 클래스패스와 JAR**: 이번 예제의 클래스 이름과 `-cp .`을 여러 파일과 라이브러리를 찾는 방법으로 확장합니다.
+- **1.4 빌드 도구 입문**: 직접 실행한 컴파일·실행 작업을 빌드 도구가 어떻게 묶어 관리하는지 배웁니다.
+- **4장 예외와 자원 관리**: 실행 중 발생한 예외를 해석하고 처리하는 방법으로 이어집니다.
+- **13장 JVM 핵심**: 실행 준비와 바이트코드 실행을 클래스 로딩·메모리·실행 엔진의 관점으로 살펴봅니다.
+
+각 항목의 범위와 작성 상태는 [Java 로드맵](../../roadmap.mdx#1-java-플랫폼과-실행-구조)에서 확인할 수 있습니다.
+
+## 정리
+
+- `javac Receipt.java`는 소스를 검사하고 클래스 파일을 만듭니다. `java -cp . Receipt`는 준비된 클래스를 JVM에서 실행합니다.
+- 클래스 파일에는 JVM 명령인 바이트코드와 부가 정보가 담깁니다. 소스만 저장하면 기존 클래스 파일은 그대로입니다.
+- 컴파일 성공, 실행 준비 성공, 프로그램의 정상 동작은 각각 확인해야 합니다. 실패한 명령과 진단 위치를 먼저 읽으면 원인을 좁힐 수 있습니다.
+
+이제 소스를 수정한 뒤 어떤 명령이 필요한지, 오류가 났을 때 소스·실행 명령·실제 연산 중 어디를 먼저 살필지 설명할 수 있으면 됩니다.
+
+## 참고 자료
+
+Java SE 21 Edition과 JDK 21 문서의 아래 절을 읽고 설명 순서·본문·예제·시각자료를 독립적으로 구성했습니다. 자료 확인일은 2026-09-07입니다.
+
+1. [The javac Command][javac]: Description과 Standard Options의 `-d`, `--version`. 소스 입력과 클래스 파일 출력, 기본 출력 위치.
+2. [The java Command][java]: Synopsis, Description, Standard Options의 `--class-path`·`--version`, [Using Source-File Mode to Launch Single-File Source-Code Programs][source-mode]. 클래스 실행과 소스 파일 실행의 차이.
+3. [The javap Command][javap]: Description, Options for javap의 `-c`·`-classpath`. 클래스 파일의 JVM 명령 확인.
+4. [JVMS §1.2 The Java Virtual Machine][jvm-intro], [§4.1 The ClassFile Structure][class-file], [§4.7.3 The Code Attribute][code]: 클래스 파일, 메서드의 명령, 형식의 버전과 JVM 구현의 구분.
+5. [JVMS §5.2 Java Virtual Machine Startup][startup]: 시작 클래스의 로딩·링크·초기화와 `main` 호출. §5.3·§5.4의 개요도 참고했습니다.
+6. [JVMS §6.5 Instructions][instructions]: `iload_<n>`, `imul`, `istore_<n>`의 의미. 직접 컴파일한 예제의 `javap` 출력 해석.
+7. [JLS §5.2 Assignment Contexts][assignment], [§15.17.2 Division Operator /][division]: 대입의 타입 검사와 정수 나눗셈에서 발생하는 예외.
+8. [PrintStream.println(int)][println], [UnsupportedClassVersionError][class-version-error]: 정수 출력과 클래스 파일 버전 오류의 API 계약.
+
+### 출처와 이용 범위
+
+JLS·JVMS와 JDK 도구·API 문서는 Oracle America, Inc. 및 해당 권리자의 자료입니다. [JLS의 Limited License Grant](https://docs.oracle.com/javase/specs/jls/se21/html/spec-license.html), [JVMS의 Limited License Grant](https://docs.oracle.com/javase/specs/jvms/se21/html/spec-license.html), [Java SE 사양 라이선스](https://download.oracle.com/otndocs/jcp/java_se-21-final-spec/license.html)와 [문서 재배포 정책](https://www.oracle.com/java/technologies/redistribution-policy.html)을 확인하고 원문 링크를 제공합니다.
+
+이 글은 원문 문단을 번역하거나 예제·그림을 복제한 문서가 아닙니다. 본문·코드·흐름도·표를 직접 작성했고, 명령 출력은 이 글의 예제를 실행해 얻은 결과에서 필요한 부분을 제시했습니다. 외부 원문의 권리를 저장소의 Apache-2.0 라이선스로 다시 부여하지 않습니다.
+
+[javac]: https://docs.oracle.com/en/java/javase/21/docs/specs/man/javac.html#description
+[java]: https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html#description
+[source-mode]: https://docs.oracle.com/en/java/javase/21/docs/specs/man/java.html#using-source-file-mode-to-launch-single-file-source-code-programs
+[javap]: https://docs.oracle.com/en/java/javase/21/docs/specs/man/javap.html#options-for-javap
+[jvm-intro]: https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-1.html#jvms-1.2
+[class-file]: https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-4.html#jvms-4.1
+[code]: https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-4.html#jvms-4.7.3
+[startup]: https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-5.html#jvms-5.2
+[instructions]: https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-6.html#jvms-6.5.imul
+[assignment]: https://docs.oracle.com/javase/specs/jls/se21/html/jls-5.html#jls-5.2
+[division]: https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.17.2
+[println]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/PrintStream.html#println(int)
+[class-version-error]: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedClassVersionError.html

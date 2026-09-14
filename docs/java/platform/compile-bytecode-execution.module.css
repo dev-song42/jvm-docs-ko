@@ -1,0 +1,85 @@
+.flow {
+  margin: 1.5rem 0;
+}
+
+.steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps > li + li {
+  margin-top: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: 12px;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.stage {
+  font-weight: 700;
+}
+
+.card p {
+  margin: 0;
+}
+
+.transition {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.transition > span {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.result {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+}
+
+.flow code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.flow figcaption {
+  margin-top: 0.75rem;
+}
+
+.comparison {
+  max-width: 100%;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+}
+
+.comparison table {
+  display: table;
+  width: 100%;
+  min-width: 32rem;
+  margin-bottom: 0;
+  table-layout: fixed;
+}
+
+.comparison code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+:global(.theme-doc-markdown) .comparison table th:last-child,
+:global(.theme-doc-markdown) .comparison table td:last-child {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
